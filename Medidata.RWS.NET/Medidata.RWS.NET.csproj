@@ -194,7 +194,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="docs\conf.py" />
+    <None Include="docs\conf.py" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
