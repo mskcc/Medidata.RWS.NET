@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema    xmlns="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="http://www.mdsol.com/ns/odm/metadata" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:odm="http://www.cdisc.org/ns/odm/v1.3" 
+  xmlns:mdsol="http://www.mdsol.com/ns/odm/metadata"   
+  elementFormDefault="qualified" 
+  attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:import namespace="http://www.cdisc.org/ns/odm/v1.3" schemaLocation="ODM1-3-1.xsd"/>
+
+  <!-- mdsol Clinical simple types declaration -->
+  <xs:simpleType name="YesNoRave">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="Yes"/>
+      <xs:enumeration value="No"/>
+      <!--<xs:maxLength   value="3"/>-->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="YesNoAsFound">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Yes" />
+      <xs:enumeration value="No" />
+      <xs:enumeration value="AsFound" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LaboratoryType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="Central"/>
+      <xs:enumeration value="Local"/>
+      <!--<xs:maxLength   value="3"/>-->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CodingModeType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="Coder"/>
+      <xs:enumeration value="Classic"/>
+      <!--<xs:maxLength   value="3"/>-->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SubmissionType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="WholeItemGroup"/>
+      <xs:enumeration value="SpecifiedItemsOnly"/>
+      <!--<xs:maxLength   value="3"/>-->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="StudyOIDType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="iMedidata"/>
+      <xs:enumeration value="Rave"/>
+      <xs:enumeration value="StudyUUID"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="LocationOIDType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="SiteUUID"/>
+      <xs:enumeration value="SiteNumber"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LongTextRave">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="LongTextRaveNotEmpty">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LongTextRaveNotEmpty50Characters">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="50" />
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LongTextRave50Characters">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DateTime">
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="TrueFalse">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TRUE"/>
+      <xs:enumeration value="FALSE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AttributeElementAttributesText">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AttributeElementAttributeValueText">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="QueryAction">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="Open"/>
+      <xs:enumeration value="Cancelled"/>
+      <xs:enumeration value="Answered"/>
+      <xs:enumeration value="Forwarded"/>
+      <xs:enumeration value="Closed"/>
+      <xs:maxLength   value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProtocolDeviationStatus">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="Open"/>
+      <xs:enumeration value="Removed"/>
+      <xs:maxLength   value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="IntegerRave">
+    <xs:restriction base="xs:integer"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="TransactionTypeType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="Insert"/>
+      <xs:enumeration value="Remove"/>
+      <xs:enumeration value="Update"/>
+      <xs:enumeration value="Upsert"/>
+      <xs:enumeration value="Context"/>
+      <xs:maxLength   value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="QueueItemTransationType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="Remove"/>
+      <xs:maxLength   value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SubjectKeyType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="SubjectUUID"/>
+      <xs:enumeration value="SubjectName"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!--mdsol MetaData type extensions -->
+  <xs:simpleType name="PositiveInteger">
+    <xs:restriction base="odm:integer">
+      <xs:pattern value="[0-9]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProjectType">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="Project"/>
+      <xs:enumeration value="GlobalLibraryVolume"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LogDirection">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="Portrait"/>
+      <xs:enumeration value="Landscape"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IndentLevel">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DoubleDataEntry">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="MustDDE"/>
+      <xs:enumeration value="MustNotDDE"/>
+      <xs:enumeration value="MayDDE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ControlType">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="CheckBox"/>
+      <xs:enumeration value="Text"/>
+      <xs:enumeration value="DateTime"/>
+      <xs:enumeration value="DropDownList"/>
+      <xs:enumeration value="SearchList"/>
+      <xs:enumeration value="RadioButton"/>
+      <xs:enumeration value="File Upload"/>
+      <xs:enumeration value="LongText"/>
+      <xs:enumeration value="RadioButton (Vertical)"/>
+      <xs:enumeration value="Dynamic SearchList"/>
+      <xs:enumeration value="SignaturePage"/>
+      <xs:enumeration value="SignatureFolder"/>
+      <xs:enumeration value="SignatureSubject"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ConfirmationStyle">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="None"/>
+      <xs:enumeration value="NoLink"/>
+      <xs:enumeration value="LinkNext"/>
+      <xs:enumeration value="LinkCustom"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextList">
+    <xs:restriction base="odm:text">
+      <xs:pattern value="([A-Za-z0-9_ ]+(,([A-Za-z0-9 _])+)*)?"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LabelPosition">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="Above"/>
+      <xs:enumeration value="Below"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="LogicalRecordPositionList">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="MaxBySubject"/>
+      <xs:enumeration value="MaxByInstance"/>
+      <xs:enumeration value="MaxByDataPage"/>
+      <xs:enumeration value="Last"/>
+      <xs:enumeration value="Next"/>
+      <xs:enumeration value="Previous"/>
+      <xs:enumeration value="First"/>
+      <xs:enumeration value="MinByDataPage"/>
+      <xs:enumeration value="MinByInstance"/>
+      <xs:enumeration value="MinBySubject"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CheckStepFunction">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="CustomFunction"/>
+      <xs:enumeration value="IsEmpty"/>
+      <xs:enumeration value="IsNotEmpty"/>
+      <xs:enumeration value="Contains"/>
+      <xs:enumeration value="StartsWith"/>
+      <xs:enumeration value="IsLessThan"/>
+      <xs:enumeration value="IsLessThanOrEqualTo"/>
+      <xs:enumeration value="IsGreaterThan"/>
+      <xs:enumeration value="IsGreaterThanOrEqualTo"/>
+      <xs:enumeration value="IsEqualTo"/>
+      <xs:enumeration value="IsNonConformant"/>
+      <xs:enumeration value="IsNotEqualTo"/>
+      <xs:enumeration value="InLocalLabRange"/>
+      <xs:enumeration value="LengthIsLessThan"/>
+      <xs:enumeration value="LengthIsLessThanOrEqualTo"/>
+      <xs:enumeration value="LengthIsGreaterThan"/>
+      <xs:enumeration value="LengthIsGreaterThanOrEqualTo"/>
+      <xs:enumeration value="LengthIsEqualTo"/>
+      <xs:enumeration value="Or"/>
+      <xs:enumeration value="And"/>
+      <xs:enumeration value="Not"/>
+      <xs:enumeration value="Now"/>
+      <xs:enumeration value="IsPresent"/>
+      <xs:enumeration value="IsActive"/>
+      <xs:enumeration value="Add"/>
+      <xs:enumeration value="Subtract"/>
+      <xs:enumeration value="Multiply"/>
+      <xs:enumeration value="Divide"/>
+      <xs:enumeration value="AddDay"/>
+      <xs:enumeration value="AddMonth"/>
+      <xs:enumeration value="AddYear"/>
+      <xs:enumeration value="AddSec"/>
+      <xs:enumeration value="AddMin"/>
+      <xs:enumeration value="AddHour"/>
+      <xs:enumeration value="DaySpan"/>
+      <xs:enumeration value="TimeSpan"/>
+      <xs:enumeration value="Age"/>
+      <xs:enumeration value="StringAdd"/>
+    </xs:restriction>
+    </xs:simpleType>
+
+  <xs:simpleType name="CheckActionType">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="OpenQuery"/>
+      <xs:enumeration value="RequireReview"/>
+      <xs:enumeration value="RequireVerification"/>
+      <xs:enumeration value="AddComment"/>
+      <xs:enumeration value="AddDeviation"/>
+      <xs:enumeration value="CustomFunction"/>
+      <xs:enumeration value="PlaceSticky"/>
+      <xs:enumeration value="AddForm"/>
+      <xs:enumeration value="AddMatrix"/>
+      <xs:enumeration value="MrgMatrix"/>
+      <xs:enumeration value="OldMrgMatrix"/>
+      <xs:enumeration value="SetNonconformant"/>
+      <xs:enumeration value="SendMessage"/>
+      <xs:enumeration value="SetDataPoint"/>
+      <xs:enumeration value="SetTimeZero"/>
+      <xs:enumeration value="SetTimeForward"/>
+      <xs:enumeration value="SetSubjectStatus"/>
+      <xs:enumeration value="SetSubjectName"/>
+      <xs:enumeration value="UpdateFormName"/>
+      <xs:enumeration value="UpdateFolderName"/>
+      <xs:enumeration value="SetRecordDate"/>
+      <xs:enumeration value="SetDataPageDate"/>
+      <xs:enumeration value="SetInstanceDate"/>
+      <xs:enumeration value="SetSubjectDate"/>
+      <xs:enumeration value="SetDataPointVisible"/>
+      <xs:enumeration value="SetSecondarySubjectName"/>
+      <xs:enumeration value="SetFormRequiresSignature"/>
+      <xs:enumeration value="SetFolderRequiresSignature"/>
+      <xs:enumeration value="SetSubjectRequiresSignature"/>
+      <xs:enumeration value="SetDynamicSearchList"/>
+    </xs:restriction>
+    </xs:simpleType>
+
+  <xs:simpleType name="DerivationStepFunction">
+    <xs:restriction base="odm:text">
+      <xs:enumeration value="Age"/>
+      <xs:enumeration value="Subtract"/>
+      <xs:enumeration value="Multiply"/>
+      <xs:enumeration value="Divide"/>
+      <xs:enumeration value="AddDay"/>
+      <xs:enumeration value="AddMonth"/>
+      <xs:enumeration value="AddYear"/>
+      <xs:enumeration value="AddSec"/>
+      <xs:enumeration value="AddMin"/>
+      <xs:enumeration value="AddHour"/>
+      <xs:enumeration value="DaySpan"/>
+      <xs:enumeration value="TimeSpan"/>
+      <xs:enumeration value="Now"/>
+      <xs:enumeration value="StringAdd"/>
+      <xs:enumeration value="CustomFunction"/>
+      <xs:enumeration value="Space"/>
+      <xs:enumeration value="Add"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- The event type of a Designer continuous event -->
+  <xs:simpleType name="ContinuousEventType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="continuous"/>
+      <xs:enumeration value="sae"/>
+    <xs:enumeration value="subjectdiary"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CodingApprovalType">
+    <xs:restriction   base="xs:string">
+      <xs:enumeration value="AutoApproval"/>
+      <xs:enumeration value="ManualApproval"/>
+      <xs:enumeration value="None"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:attribute name="ErrorDescription" type="mdsol:LongTextRave"/>
+
+  <!-- mdsol extension clinicaldata attributes -->
+    <xs:attribute name="Overdue" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Touched" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Empty" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Incomplete" type="mdsol:YesNoRave"/>
+    <xs:attribute name="NonConformant" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresSecondPass" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresReconciliation" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresVerification" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Verified" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Frozen" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Locked" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresReview" type="mdsol:YesNoRave"/>
+    <xs:attribute name="PendingReview" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Reviewed" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresAnswerQuery" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresPendingCloseQuery" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresCloseQuery" type="mdsol:YesNoRave"/>
+    <xs:attribute name="StickyPlaced" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Signed" type="mdsol:YesNoRave"/>
+    <xs:attribute name="SignatureCurrent" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresTranslation" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresCoding" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresPendingAnswerQuery" type="mdsol:YesNoRave"/>
+    <xs:attribute name="RequiresSignature" type="mdsol:YesNoRave"/>
+    <xs:attribute name="ReadyForFreeze" type="mdsol:YesNoRave"/>
+    <xs:attribute name="ReadyForLock" type="mdsol:YesNoRave"/>
+    <xs:attribute name="SubjectActive" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Deleted" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Lock" type="mdsol:YesNoAsFound"/>
+    <xs:attribute name="Freeze" type="mdsol:YesNoRave"/>
+    <xs:attribute name="Verify" type="mdsol:YesNoRave"/>
+    <xs:attribute name="TranslatedValue" type="mdsol:LongTextRave"/>
+    <xs:attribute name="CodingDictionaryOID" type="mdsol:LongTextRave"/>
+    <xs:attribute name="CodingDictionaryVersion" type="mdsol:LongTextRave"/>
+    <xs:attribute name="CoderUsername" type="mdsol:LongTextRaveNotEmpty" />
+    <xs:attribute name="DateTimeStamp" type="mdsol:DateTime" />
+    <xs:attribute name="SpecifyValue" type="mdsol:LongTextRave"/>
+    <xs:attribute name="SecondarySubjectKey" type="mdsol:YesNoRave"/>
+    <xs:attribute name="LaboratoryRef" type="mdsol:LongTextRave"/>
+    <xs:attribute name="LaboratoryType" type="mdsol:LaboratoryType"/>
+    <xs:attribute name="Submission" type="mdsol:SubmissionType"/>
+    <xs:attribute name="StudyOIDType" type="mdsol:StudyOIDType"/>
+    <xs:attribute name="Status" type="odm:text"/>  <!--Status added by request from a CRO. Value is configurable in Rave - so type is odm:text, e.g. 'enrolled'-->
+    <xs:attribute name="SubjectKeyType" type="mdsol:SubjectKeyType"/>
+    <xs:attribute name="SubjectName" type="odm:text"/>
+    <xs:attribute name="InstanceName" type="odm:text"/>
+    <xs:attribute name="DataPageName" type="odm:text"/>
+    <xs:attribute name="AuditSubCategoryName" type="odm:text"/>
+    <xs:attribute name="StudyName" type="odm:text"/>
+    <xs:attribute name="CodingContextURI" type="odm:text"/>
+    <xs:attribute name="CodingContextQueryURI" type="odm:text"/>
+    <xs:attribute name="CodingTermUUID" type="odm:text"/>
+    <xs:attribute name="UpdatedTimeStamp" type="odm:text"/>  
+    <!--<xs:attribute name="Reviewed" type="mdsol:YesNo"/>-->
+    <xs:attribute name="InstanceId" type="odm:text"/>
+    <xs:attribute name="DataPageId" type="odm:text"/>
+    <xs:attribute name="RecordId" type="odm:text"/>
+	<xs:attribute name="InstanceOverDue" type="odm:text"/>
+	<xs:attribute name="InstanceStartWindow" type="odm:text"/>
+	<xs:attribute name="InstanceEndWindow" type="odm:text"/>
+    <xs:attribute name="InstanceClose" type="odm:text"/>
+    <xs:attribute name="InstanceAccess" type="odm:text"/>
+
+    <!-- mdsol extension AuditRecords elements-->
+    <xs:attribute name="IncludeFileOID" type="mdsol:YesNoRave"/>
+    
+    <!-- mdsol extension SiteRef attributes-->
+    <xs:attribute name="LocationOIDType" type="mdsol:LocationOIDType"/>
+    <xs:attribute name="SiteNumber" type="odm:text"/>
+    <xs:attribute name="StudySiteName" type="odm:text"/>
+    <xs:attribute name="SiteUUID" type="odm:text"/>
+    <xs:attribute name="LocationName" type="odm:text"/>
+  
+  <!-- mdsol extension metadata attributes-->
+  <xs:attribute name="Segment" type="mdsol:LongTextRave"/>
+  <xs:attribute name="ProjectType" type="mdsol:ProjectType"/>
+  <xs:attribute name="SignaturePrompt" type="odm:text"/>
+  <xs:attribute name="DeleteExisting" type="odm:YesOrNo"/>
+  <xs:attribute name="PrimaryFormOID" type="odm:oidref"/>
+  <xs:attribute name="DefaultMatrixOID" type="odm:oidref"/>
+  <xs:attribute name="MatrixOID" type="odm:oidref"/>
+  <xs:attribute name="AccessDays" type="mdsol:PositiveInteger"/>
+  <xs:attribute name="StartWinDays" type="mdsol:PositiveInteger"/>
+  <xs:attribute name="TargetDays" type="mdsol:PositiveInteger"/>
+  <xs:attribute name="EndWinDays" type="mdsol:PositiveInteger"/>
+  <xs:attribute name="OverDueDays" type="mdsol:PositiveInteger"/>
+  <xs:attribute name="CloseDays" type="mdsol:PositiveInteger"/>
+  <xs:attribute name="ParentStudyEventRef" type="odm:oidref"/>
+  <xs:attribute name="OrderNumber" type="mdsol:PositiveInteger"/>
+  <xs:attribute name="Active" type="odm:YesOrNo"/>
+  <xs:attribute name="Template" type="odm:YesOrNo"/>
+  <xs:attribute name="SignatureRequired" type="odm:YesOrNo"/>
+  <xs:attribute name="LogDirection" type="mdsol:LogDirection"/>
+  <xs:attribute name="DoubleDataEntry" type="mdsol:DoubleDataEntry"/>
+  <xs:attribute name="ConfirmationStyle" type="mdsol:ConfirmationStyle"/>
+  <xs:attribute name="LinkStudyEventOID" type="odm:oidref"/>
+  <xs:attribute name="LinkFormOID" type="odm:oidref"/>
+  <xs:attribute name="Specify" type="odm:YesOrNo"/>
+  <xs:attribute name="ControlType" type="mdsol:ControlType"/>
+  <xs:attribute name="DateTimeFormat" type="mdsol:LongTextRaveNotEmpty50Characters"/>
+  <xs:attribute name="AcceptableFileExtensions" type="odm:text"/>
+  <xs:attribute name="IndentLevel" type="mdsol:IndentLevel"/>
+  <xs:attribute name="FieldNumber" type="mdsol:LongTextRave50Characters"/>
+  <xs:attribute name="SourceDocument" type="odm:YesOrNo"/>
+  <xs:attribute name="DefaultValue" type="odm:text"/>
+  <xs:attribute name="SASFormat" type="odm:text"/>
+  <xs:attribute name="SASLabel" type="odm:text"/>
+  <xs:attribute name="QueryFutureDate" type="odm:YesOrNo"/>
+  <xs:attribute name="Visible" type="odm:YesOrNo"/>
+  <xs:attribute name="TranslationRequired" type="odm:YesOrNo"/>
+  <xs:attribute name="ClinicalSignificance" type="odm:YesOrNo"/>
+  <xs:attribute name="QueryNonConformance" type="odm:YesOrNo"/>
+  <xs:attribute name="OtherVisits" type="odm:YesOrNo"/>
+  <xs:attribute name="CanSetItemGroupDate" type="odm:YesOrNo"/>
+  <xs:attribute name="CanSetFormDate" type="odm:YesOrNo"/>
+  <xs:attribute name="CanSetStudyEventDate" type="odm:YesOrNo"/>
+  <xs:attribute name="CanSetSubjectDate" type="odm:YesOrNo"/>
+  <xs:attribute name="DoesNotBreakSignature" type="odm:YesOrNo"/>
+  <xs:attribute name="VisualVerify" type="odm:YesOrNo"/>
+  <xs:attribute name="CodingDictionary" type="mdsol:LongTextRave"/>
+  <xs:attribute name="UnitDictionaryName" type="odm:text"/>
+  <xs:attribute name="StandardUnit" type="odm:YesOrNo"/>
+  <xs:attribute name="ConstantA" type="odm:float"/>
+  <xs:attribute name="ConstantB" type="odm:float"/>
+  <xs:attribute name="ConstantC" type="odm:float"/>
+  <xs:attribute name="ConstantK" type="odm:float"/>
+  <xs:attribute name="RangeTypeName" type="odm:text"/>
+  <xs:attribute name="LabVariable" type="odm:text"/>
+  <xs:attribute name="RangeLocation" type="odm:text"/>
+  <xs:attribute name="Study" type="odm:text"/>
+  <xs:attribute name="VariableOID" type="mdsol:LongTextRave"/>
+  <xs:attribute name="StudyEventDefName" type="odm:text"/> <!-- This is a specific work-around for including data from StudyEventDefName. Not for general use. use="required"  is excluded because is optional -->
+  <xs:attribute name="StudyEventDefType" type="odm:text"/> <!-- This is a specific work-around for including data from StudyEventDefType. Not for general use. use="required"  is excluded because is optional -->
+  <xs:attribute name="StudyEventDefRepeating" type="odm:YesOrNo"/> <!-- This is a specific work-around for including data from StudyEventDefRepeating. Not for general use. use="required"  is excluded because is optional -->
+  <xs:attribute name="FileName" type="odm:fileName"/>
+
+  <xs:attribute name="ContinuousEventType" type="mdsol:ContinuousEventType"/>
+  <xs:attribute name="ContinuousEventStartStudyEventOID" type="mdsol:LongTextRave" />
+  <xs:attribute name="ContinuousEventEndStudyEventOID" type="mdsol:LongTextRave" />
+
+  <xs:attribute name="UserGroup" type="odm:text" />
+  <xs:attribute name="SiteGroup" type="odm:text" />
+  <xs:attribute name="UserRole" type="odm:text" />
+
+  <xs:attribute name="StudySiteNumber" type="odm:text"/>
+
+  <xs:attribute name="SignatureBroken" type="mdsol:YesNoRave" />
+  
+  <!-- mdsol extensions Clinical Data Complex Types-->
+    <xs:complexType name="mdsol-Link">
+      <xs:attribute ref="xlink:type" />
+      <xs:attribute ref="xlink:href" />
+    </xs:complexType>
+  
+  <xs:complexType name="mdsol-Review">
+    <xs:attribute name="Reviewed" type="mdsol:YesNoRave" use="required"/>
+    <xs:attribute name="GroupName" type="mdsol:LongTextRave" use="required" />
+  </xs:complexType>
+
+  <!--<xs:complexType name="mdsol-Sticky">
+    <xs:attribute name="Value" type="mdsol:LongTextRave" use="optional"/>
+    <xs:attribute name="StickyRepeatKey" type="mdsol:IntegerRave" use="optional" />
+    <xs:attribute name="Acknowledged" type="mdsol:YesNoRave" use="optional" />
+    <xs:attribute name="Recipient" type="mdsol:LongTextRave" use="optional"  />
+  </xs:complexType>-->
+
+  <xs:complexType name="mdsol-Query">
+    <xs:attribute name="Recipient" type="mdsol:LongTextRave" use="optional"  />
+    <xs:attribute name="Value" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="Status" type="mdsol:QueryAction" use="optional" />
+    <xs:attribute name="QueryRepeatKey" type="odm:float" use="optional" />
+    <xs:attribute name="RequiresResponse" type="mdsol:YesNoRave" use="optional"/>
+    <xs:attribute name="Response" type="mdsol:LongTextRave" use="optional"/>
+    <xs:attribute name="PrecedingQueryRepeatKey" type="odm:float" use="optional"/>
+    <xs:attribute name="Username" type="mdsol:LongTextRaveNotEmpty" use="optional"/>
+    <xs:attribute name="DateTime" type="mdsol:LongTextRaveNotEmpty" use="optional" />
+    <xs:attribute name="CancelURI" type="mdsol:LongTextRaveNotEmpty" use="optional"/>
+    <xs:attribute name="CancelVERB" type="mdsol:LongTextRaveNotEmpty" use="optional" />
+    <xs:attribute name="UUID" type="mdsol:LongTextRaveNotEmpty" use="optional"/>
+    <xs:attribute name="CoderUsername" type="mdsol:LongTextRaveNotEmpty" use="optional"/>
+    <xs:attribute name="CodingDictionaryVersion" type="mdsol:LongTextRaveNotEmpty" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-ProtocolDeviation">
+    <xs:attribute name="Value" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="Status" type="mdsol:ProtocolDeviationStatus" use="required" />
+    <xs:attribute name="Class" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="Code" type="mdsol:LongTextRave" use="optional"/>
+    <xs:attribute name="ProtocolDeviationRepeatKey" type="mdsol:IntegerRave" use="required"/>
+    <xs:attribute name="TransactionType" type="mdsol:TransactionTypeType" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-Comment">
+    <xs:attribute name="CommentRepeatKey" type="xs:string" use="optional" />
+    <xs:attribute name="TransactionType" type="mdsol:TransactionTypeType" use="optional" />
+    <xs:attribute name="Value" type="mdsol:LongTextRave" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-LabData">
+    <xs:attribute name="Low" type="mdsol:IntegerRave" use="optional"/>
+    <xs:attribute name="High" type="mdsol:IntegerRave" use="optional"/>
+    <xs:attribute name="Units" type="mdsol:LongTextRave" use="optional"/>
+    <xs:attribute name="TransactionType" type="mdsol:TransactionTypeType" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-ClinicalSignificance">
+    <xs:attribute name="Value" type="mdsol:LongTextRave" use="optional"/>
+    <xs:attribute name="Status" type="mdsol:LongTextRave" use="optional"/>
+    <xs:attribute name="Comment" type="mdsol:LongTextRave" use="optional"/>
+    <xs:attribute name="TransactionType" type="mdsol:TransactionTypeType" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-LabAlert">
+    <xs:attribute name="Type" type="mdsol:LongTextRave" use="required"/>
+    <xs:attribute name="Range" type="mdsol:LongTextRave" use="optional"/>
+    <xs:attribute name="Alert" type="mdsol:LongTextRave" use="optional"/>
+    <xs:attribute name="TransactionType" type="mdsol:TransactionTypeType" use="optional" />
+  </xs:complexType>
+  
+  <xs:complexType name="mdsol-CodingData">
+    <xs:sequence>
+      <xs:element ref="mdsol:DictionaryLevelData" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="CodingDictionaryOID" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="CodingDictionaryVersion" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="CoderUsername" type="mdsol:LongTextRaveNotEmpty" use="optional" />
+    <xs:attribute name="DateTimeStamp" type="odm:datetime" use="optional" />
+    <xs:attribute name="TransactionType" type="mdsol:TransactionTypeType" use="optional" />
+    <xs:attribute name="CodingMode" type="mdsol:CodingModeType" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-TranslatedData">
+    <xs:attribute name="Value" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="TransactionType" type="mdsol:TransactionTypeType" use="optional" />
+  </xs:complexType>
+  
+  <xs:complexType name="mdsol-DictionaryLevelData">
+    <xs:attribute name="DictionaryLevelOID" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="Value" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="Term" type="mdsol:LongTextRaveNotEmpty" use="required" />
+  </xs:complexType>
+
+    <!-- mdsol extension metadata Complex Types-->
+  <xs:complexType name="mdsol-CodingDictionaryVersion">
+    <xs:attribute name="OID" type="mdsol:LongTextRave" use="required"  />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CodingDictionaryDef">
+    <xs:sequence>
+      <xs:element ref="mdsol:CodingDictionaryLevelDef" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="OID" type="mdsol:LongTextRaveNotEmpty50Characters" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CodingDictionaryLevelDef">
+    <xs:sequence>
+      <xs:element ref="mdsol:DictionaryLevelComponentDef" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="OID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="Default" type="mdsol:LongTextRaveNotEmpty" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-DictionaryLevelComponentDef">
+    <xs:attribute name="OID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CodingRequestDef">
+    <xs:sequence>
+      <xs:element ref="mdsol:DictionaryLevelComponentRef" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="mdsol:SupplementalRef" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="mdsol:CodingWorkflowData" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="CodingWorkflowOID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="CodingDictionaryLevelOID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="CodingDictionaryOID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="CodingPriority" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="CodingLocale" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="CodingApprovalType" type="mdsol:CodingApprovalType" use="required" />
+    <xs:attribute name="CodingDictionaryVersion" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="CodingModeType" type="mdsol:CodingModeType" use="optional" default="Coder" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-Label">
+    <xs:simpleContent>
+      <xs:extension base="odm:text">
+        <xs:attribute name="Position" type="mdsol:LabelPosition" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-LabSettings">
+    <xs:sequence>
+      <xs:element ref="mdsol:LabVariableMapping" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="StandardUnits" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="ReferenceLabs" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="AlertLabs" type="mdsol:LongTextRave" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-RangeTypes">
+    <xs:sequence>
+      <xs:element ref="mdsol:LabVariableMapping" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="RangeTypeName" type="mdsol:LongTextRave" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-LabVariableMapping">
+    <xs:attribute name="LabVariable" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="StudyEventOID" type="odm:text" use="required" />
+    <xs:attribute name="FormOID" type="odm:text" use="required" />
+    <xs:attribute name="ItemOID" type="odm:text" use="required" />
+    <xs:attribute name="RangeLocation" type="mdsol:LongTextRave" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-Attribute">
+    <xs:attribute name="Namespace" type="mdsol:AttributeElementAttributesText" use="required" />
+    <xs:attribute name="Name" type="mdsol:AttributeElementAttributesText" use="required" />
+    <xs:attribute name="Value" type="mdsol:AttributeElementAttributeValueText" use="required" />
+    <xs:attribute name="TransactionType" type="mdsol:TransactionTypeType" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CheckStep">
+    <xs:attribute name="VariableOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="DataFormat" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FolderOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FormOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FieldOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="StaticValue" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="Function" type="mdsol:CheckStepFunction" use="optional" />
+    <xs:attribute name="CustomFunction" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="RecordPosition" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="LogicalRecordPosition" type="mdsol:LogicalRecordPositionList" use="optional" />
+    <xs:attribute name="FormRepeatNumber" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="FolderRepeatNumber" type="mdsol:PositiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CheckAction">
+    <xs:attribute name="FolderOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FormOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FieldOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="VariableOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="RecordPosition" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="FormRepeatNumber" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="FolderRepeatNumber" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="Type" type="mdsol:CheckActionType" use="optional" />
+    <xs:attribute name="String" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="Options" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="Script" type="mdsol:LongTextRave" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-EditCheckDef">
+    <xs:sequence>
+      <xs:element ref="mdsol:CheckStep" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="mdsol:CheckAction" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="OID" type="mdsol:LongTextRave" use="required"/>
+    <xs:attribute name="Active" type="mdsol:TrueFalse" use="optional" />
+    <xs:attribute name="BypassDuringMigration" type="mdsol:TrueFalse" use="optional" />
+    <xs:attribute name="NeedsRetesting" type="mdsol:TrueFalse" use="optional" />
+  </xs:complexType>
+  
+  <xs:complexType name="mdsol-DerivationDef">
+    <xs:sequence>
+      <xs:element ref="mdsol:DerivationStep" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="OID" type="mdsol:LongTextRave" use="required"/>
+    <xs:attribute name="Active" type="mdsol:TrueFalse" use="optional" />
+    <xs:attribute name="BypassDuringMigration" type="mdsol:TrueFalse" use="optional" />
+    <xs:attribute name="NeedsRetesting" type="mdsol:TrueFalse" use="optional" />
+    <xs:attribute name="VariableOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FolderOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FormOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FieldOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="RecordPosition" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="AllVariablesInFolders" type="mdsol:TrueFalse" use="optional" />
+    <xs:attribute name="AllVariablesInFields" type="mdsol:TrueFalse" use="optional" />
+    <xs:attribute name="LogicalRecordPosition" type="mdsol:LogicalRecordPositionList" use="optional" />
+    <xs:attribute name="FormRepeatNumber" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="FolderRepeatNumber" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="CopySource" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="RetestingReason" type="mdsol:LongTextRave" use="optional" />    
+  </xs:complexType>
+  
+  <xs:complexType name="mdsol-DerivationStep">
+    <xs:attribute name="DataFormat" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="VariableOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="Value" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="Function" type="mdsol:DerivationStepFunction" use="optional" />
+    <xs:attribute name="FolderOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FormOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="FieldOID" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="CustomFunction" type="mdsol:LongTextRave" use="optional" />
+    <xs:attribute name="RecordPosition" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="LogicalRecordPosition" type="mdsol:LogicalRecordPositionList" use="optional" />
+    <xs:attribute name="FormRepeatNumber" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="FolderRepeatNumber" type="mdsol:PositiveInteger" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CustomFunctionDef">
+    <xs:simpleContent>
+      <xs:extension base="odm:text">
+        <xs:attribute name="OID" type="mdsol:LongTextRave" use="required"/>
+        <xs:attribute name="Language" type="mdsol:LongTextRave" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-QueueItem">
+    <xs:attribute name="OID" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="TransactionType" type="mdsol:QueueItemTransationType" use="optional"/>
+    <xs:attribute name="ErrorDescription" type="mdsol:LongTextRave" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-PartialClinicalData">
+    <xs:sequence>
+      <xs:element ref="mdsol:CodingData" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="mdsol:Query" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CodingDictionaries">
+    <xs:sequence>
+      <xs:element ref="mdsol:CodingDictionaryDef" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="mdsol-CodingWorkflows">
+    <xs:sequence>
+      <xs:element ref="mdsol:CodingWorkflowDef" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CodingWorkflowDef">
+    <xs:sequence>
+      <xs:element ref="mdsol:CodingWorkflowData" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="OID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CodingWorkflowRef">
+    <xs:attribute name="CodingWorkflowOID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CodingDictionaryRef">
+    <xs:attribute name="CodingDictionaryOID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-DictionaryData">
+    <xs:attribute name="Value" type="mdsol:LongTextRave" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-CodingWorkflowData">
+    <xs:attribute name="Name" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="DefaultValue" type="mdsol:LongTextRaveNotEmpty" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-SupplementalRef">
+    <xs:attribute name="ItemRef" type="mdsol:LongTextRave" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-DictionaryLevelComponentRef">
+    <xs:attribute name="DictionaryLevelComponentOID" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="ItemRef" type="mdsol:LongTextRave" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-LabelRef">
+    <xs:attribute name="LabelOID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="OrderNumber" type="mdsol:PositiveInteger" use="required" />
+    <xs:attribute name="Mandatory" type="mdsol:YesNoRave" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mdsol-LabelDef">
+    <xs:sequence>
+      <xs:element ref="odm:TranslatedText" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="mdsol:ViewRestriction" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="mdsol:HelpText" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="OID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="Name" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="Active" type="mdsol:YesNoRave" use="optional" />
+    <xs:attribute name="Visible" type="mdsol:YesNoRave" use="optional" />
+    <xs:attribute name="IndentLevel" type="mdsol:PositiveInteger" use="optional" />
+    <xs:attribute name="FieldNumber" type="mdsol:LongTextRave50Characters" use="optional"/>
+  </xs:complexType>
+
+  <!--<xs:attributeGroup name="mdsol-ConfirmationMessageDefinition">
+    <xs:attribute ref="xml:lang"/>
+  </xs:attributeGroup>-->
+
+  <xs:attributeGroup name="XMLLangAttributeGroup">
+    <xs:attribute ref="xml:lang"/>
+  </xs:attributeGroup>
+
+  <xs:complexType name="mdsol-TextElementWithXMLLang">
+    <xs:simpleContent>
+      <xs:extension        base="odm:text">
+        <xs:attributeGroup ref="mdsol:XMLLangAttributeGroup"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <!-- Defines the Periods in a Designer schedule with its visits -->
+  <xs:complexType name="mdsol-StudyPeriodDef">
+  	<xs:sequence>
+  		<xs:element ref="odm:StudyEventRef" minOccurs="0" maxOccurs="unbounded" />
+  	</xs:sequence>
+    <xs:attribute name="OID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="Name" type="mdsol:LongTextRave" use="required" />
+    <xs:attribute name="PeriodType" type="mdsol:LongTextRave" use="required" />
+  </xs:complexType>
+
+  <!-- Ref to the Designer schedule's Periods -->
+  <xs:complexType name="mdsol-StudyPeriodRef">
+    <xs:attribute name="StudyPeriodOID" type="mdsol:LongTextRaveNotEmpty" use="required" />
+    <xs:attribute name="OrderNumber" type="mdsol:PositiveInteger" use="required" />
+  </xs:complexType>
+
+  
+  <!-- mdsol extension Clinical Data elements-->
+  <xs:element name="Link" type="mdsol:mdsol-Link"/>
+  <xs:element name="Review" type="mdsol:mdsol-Review"/>
+  <xs:element name="Query" type="mdsol:mdsol-Query"/>
+  <!--<xs:element name="Sticky" type="mdsol:mdsol-Sticky"/> -->
+  <xs:element name="ProtocolDeviation" type="mdsol:mdsol-ProtocolDeviation"/>
+  <xs:element name="Comment" type="mdsol:mdsol-Comment"/>
+  <xs:element name="LabData" type="mdsol:mdsol-LabData"/>
+  <xs:element name="ClinicalSignificance" type="mdsol:mdsol-ClinicalSignificance"/>
+  <xs:element name="LabAlert" type="mdsol:mdsol-LabAlert"/>
+  <xs:element name="CodingData" type="mdsol:mdsol-CodingData"/>
+  <xs:element name="TranslatedData" type="mdsol:mdsol-TranslatedData"/>
+  <xs:element name="DictionaryLevelData" type="mdsol:mdsol-DictionaryLevelData"/>
+  
+  <!-- mdsol extension metadata  elements-->
+  <xs:element name="Label" type="mdsol:mdsol-Label"/>
+  <xs:element name="ConfirmationMessage" type="mdsol:mdsol-TextElementWithXMLLang"/>
+  <xs:element name="ViewRestrictions" type="mdsol:TextList"/>
+  <xs:element name="ViewRestriction" type="odm:text"/>
+  <xs:element name="EntryRestrictions" type="mdsol:TextList"/>
+  <xs:element name="EntryRestriction" type="odm:text"/>
+  <xs:element name="ReviewGroups" type="mdsol:TextList"/>
+  <xs:element name="ReviewGroup" type="mdsol:TextList"/>
+  <xs:element name="HeaderText" type="mdsol:mdsol-TextElementWithXMLLang"/>
+  <xs:element name="HelpText" type="mdsol:mdsol-TextElementWithXMLLang"/>
+  <xs:element name="LabSettings" type="mdsol:mdsol-LabSettings"/>
+  <xs:element name="RangeType" type="mdsol:mdsol-RangeTypes"/>
+  <xs:element name="LabVariableMapping" type="mdsol:mdsol-LabVariableMapping"/>
+  <xs:element name="Attribute" type="mdsol:mdsol-Attribute"/>
+  <xs:element name="PriorCodingDictionaryVersion" type="mdsol:mdsol-CodingDictionaryVersion"/>
+  <xs:element name="CodingDictionaryVersion" type="mdsol:mdsol-CodingDictionaryVersion"/>
+  <xs:element name="CodingDictionaryDef" type="mdsol:mdsol-CodingDictionaryDef"/>
+  <xs:element name="CodingDictionaryLevelDef" type="mdsol:mdsol-CodingDictionaryLevelDef"/>
+  <xs:element name="DictionaryLevelComponentDef" type="mdsol:mdsol-DictionaryLevelComponentDef"/>
+  <xs:element name="CheckStep" type="mdsol:mdsol-CheckStep"/>
+  <xs:element name="CheckAction" type="mdsol:mdsol-CheckAction"/>
+  <xs:element name="EditCheckDef" type="mdsol:mdsol-EditCheckDef"/>
+  <xs:element name="DerivationStep" type="mdsol:mdsol-DerivationStep"/>
+  <xs:element name="DerivationDef" type="mdsol:mdsol-DerivationDef"/>
+  <xs:element name="CustomFunctionDef" type="mdsol:mdsol-CustomFunctionDef"/>
+  <xs:element name="QueueItem" type="mdsol:mdsol-QueueItem"/>
+  <xs:element name="CodingDictionaries" type="mdsol:mdsol-CodingDictionaries"/>
+  <xs:element name="CodingWorkflows" type="mdsol:mdsol-CodingWorkflows"/>
+  <xs:element name="CodingWorkflowDef" type="mdsol:mdsol-CodingWorkflowDef"/>
+  <xs:element name="CodingRequestDef" type="mdsol:mdsol-CodingRequestDef"/>
+  <xs:element name="DictionaryLevelComponentRef" type="mdsol:mdsol-DictionaryLevelComponentRef"/>
+  <xs:element name="SupplementalRef" type="mdsol:mdsol-SupplementalRef"/>
+  <xs:element name="CodingWorkflowData" type="mdsol:mdsol-CodingWorkflowData"/>
+  <xs:element name="DictionaryData" type="mdsol:mdsol-DictionaryData"/>
+  <xs:element name="CodingDictionaryRef" type="mdsol:mdsol-CodingDictionaryRef"/>
+  <xs:element name="CodingWorkflowRef" type="mdsol:mdsol-CodingWorkflowRef"/>
+  <xs:element name="LabelRef" type="mdsol:mdsol-LabelRef"/>
+  <xs:element name="LabelDef" type="mdsol:mdsol-LabelDef"/>
+  <xs:element name="StudyPeriodRef" type="mdsol:mdsol-StudyPeriodRef"/>
+  <xs:element name="StudyPeriodDef" type="mdsol:mdsol-StudyPeriodDef"/>
+  <xs:element name="PartialClinicalData" type="mdsol:mdsol-PartialClinicalData"/>
+</xs:schema>

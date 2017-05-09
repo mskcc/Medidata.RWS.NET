@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema    
+  xmlns="http://www.cdisc.org/ns/studydesign/v1.0" 
+  targetNamespace="http://www.cdisc.org/ns/studydesign/v1.0" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:odm="http://www.cdisc.org/ns/odm/v1.3" 
+  xmlns:mdsol="http://www.mdsol.com/ns/odm/metadata" 
+  xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0"
+  elementFormDefault="qualified" 
+  attributeFormDefault="unqualified">
+  
+  <xs:import namespace="http://www.mdsol.com/ns/odm/metadata" 
+    schemaLocation="mdsol-ns.xsd"/>
+    
+  <xs:include schemaLocation="sdm-ns.xsd" /> 
+
+  <!-- 
+  The mdsol extensions to sdm go here, since it is in a different targetNamespace than the odm
+  -->
+  <xs:redefine schemaLocation="sdm-ns-structure.xsd">
+  
+	<!-- ActivityRef Extensions -->
+	<xs:attributeGroup name="ActivityRefAttributeExtension">
+      <xs:attributeGroup ref="ActivityRefAttributeExtension"/>
+      <xs:attribute ref="mdsol:ContinuousEventType"/>
+      <xs:attribute ref="mdsol:ContinuousEventStartStudyEventOID"/>
+      <xs:attribute ref="mdsol:ContinuousEventEndStudyEventOID"/>
+	</xs:attributeGroup>
+  </xs:redefine>
+  
+</xs:schema>

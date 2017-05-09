@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.cdisc.org/ns/odm/v1.3" 
+           xmlns="http://www.cdisc.org/ns/odm/v1.3"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0" 
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+           
+  <xs:import namespace="http://www.cdisc.org/ns/studydesign/v1.0" schemaLocation="sdm-ns.xsd" />
+
+  <xs:redefine schemaLocation="ODM1-3-1.xsd">
+    <xs:group name="ProtocolElementExtension">
+      <xs:sequence>
+        <xs:group ref="ProtocolElementExtension" />
+        <xs:group ref="ProtocolElementContents" />
+      </xs:sequence>
+    </xs:group>
+
+    <xs:group name="StudyEventDefElementExtension">
+      <xs:sequence>
+        <xs:group ref="StudyEventDefElementExtension" />
+        <xs:group ref="StudyEventDefElementContents" />
+      </xs:sequence>
+    </xs:group>
+  </xs:redefine>
+
+  <xs:group name="ProtocolElementContents">
+    <xs:sequence>
+      <xs:element ref="sdm:Summary" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="sdm:InclusionExclusionCriteria" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="sdm:Structure" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="sdm:Workflow" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="sdm:Timing" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="StudyEventDefElementContents">
+    <xs:sequence>
+      <xs:element ref="sdm:ActivityRef" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:group>
+
+</xs:schema>

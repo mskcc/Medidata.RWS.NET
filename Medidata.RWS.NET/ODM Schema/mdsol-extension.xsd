@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns="http://www.cdisc.org/ns/odm/v1.3"
+  targetNamespace="http://www.cdisc.org/ns/odm/v1.3"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:mdsol="http://www.mdsol.com/ns/odm/metadata"
+  xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified">
+  
+  <!-- add sdm namespace above: xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0"  -->
+
+  <xs:import namespace="http://www.mdsol.com/ns/odm/metadata" 
+    schemaLocation="mdsol-ns.xsd"/>
+    
+  <!-- mdsol extensions to sdm --> 
+  <xs:import namespace="http://www.cdisc.org/ns/studydesign/v1.0" 
+    schemaLocation="mdsol-sdm-extension.xsd"/>
+    
+  <xs:redefine schemaLocation="ODM1-3-1.xsd">
+
+    <!--ODM Attribute Extensions -->
+    <xs:attributeGroup name="ODMAttributeExtension">
+      <xs:attributeGroup ref="ODMAttributeExtension"/>
+      <xs:attribute ref="mdsol:ErrorDescription"/>
+    </xs:attributeGroup>
+
+    <!-- ODM Element Extensions -->
+    <xs:group name="ODMElementExtension">
+      <xs:sequence>
+        <xs:group ref="ODMElementExtension"/>
+        <xs:element ref="mdsol:PartialClinicalData" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:CodingDictionaries" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:CodingWorkflows" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:QueueItem" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:group>
+
+    <!--User extensions metadata-->    
+    <xs:attributeGroup name="UserAttributeExtension">
+      <xs:attributeGroup ref="UserAttributeExtension"/>
+      <xs:attribute ref="mdsol:Active"/>
+      <xs:attribute ref="mdsol:UserGroup"/>
+      <xs:attribute ref="mdsol:SiteGroup"/>
+	  <xs:attribute ref="mdsol:UserRole"/>
+    </xs:attributeGroup>
+
+    <!--START set added by request from a CRO-->
+    <xs:attributeGroup name="LocationAttributeExtension">
+      <xs:attributeGroup ref="LocationAttributeExtension"/>
+      <xs:attribute ref="mdsol:Active"/>      
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="MetaDataVersionRefAttributeExtension">
+      <xs:attributeGroup ref="MetaDataVersionRefAttributeExtension"/>
+      <xs:attribute ref="mdsol:StudySiteNumber"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="SignatureDefAttributeExtension">
+    <xs:attributeGroup ref="SignatureDefAttributeExtension"/>
+    <xs:attribute ref="mdsol:Study"/>
+    </xs:attributeGroup>
+
+    <!--END set added by request from a CRO-->
+
+
+    <!--Study extensions metadata-->
+    <xs:attributeGroup name="StudyAttributeExtension">
+      <xs:attributeGroup ref="StudyAttributeExtension"/>
+      <xs:attribute ref="mdsol:ProjectType"/>
+      <xs:attribute ref="mdsol:Segment"/>
+      <xs:attribute ref="mdsol:StudyOIDType"/>
+    </xs:attributeGroup>
+
+    <!-- Study extensions metadata -->
+    <xs:group name="StudyElementExtension">
+      <xs:sequence>
+        <xs:group ref="StudyElementExtension"/>
+        <xs:element ref="mdsol:CodingDictionaryRef" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="mdsol:CodingWorkflowRef" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:group>
+
+    <!--MetaDataVersion extensions metadata-->
+    <xs:attributeGroup name="MetaDataVersionAttributeExtension">
+      <xs:attributeGroup ref="MetaDataVersionAttributeExtension"/>
+      <xs:attribute ref="mdsol:PrimaryFormOID"/>
+      <xs:attribute ref="mdsol:DefaultMatrixOID"/>
+      <xs:attribute ref="mdsol:MatrixOID" use="optional"/>
+      <xs:attribute ref="mdsol:SignaturePrompt"/>
+      <xs:attribute ref="mdsol:DeleteExisting"/>
+    </xs:attributeGroup>
+    <xs:group name="MetaDataVersionElementExtension">
+      <xs:sequence>        
+        <xs:group ref="MetaDataVersionElementExtension"/>
+        <xs:element ref="mdsol:LabelDef" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:ConfirmationMessage" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:LabSettings" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:CustomFunctionDef" minOccurs="0" maxOccurs="1"/>
+        <!-- The Periods in a Designer schedule with its visits -->
+        <xs:element ref="mdsol:StudyPeriodDef" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="mdsol:EditCheckDef" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="mdsol:DerivationDef" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:group>
+    
+    <!--StudyEventRef extensions metadata-->
+    <!--StudyEventRef its registerd with odm-foundation schema-->
+    <!--This is a specific work-around for including data from StudyEventDef. Not for general use-->
+    <xs:attributeGroup name="StudyEventRefAttributeExtension">
+      <xs:attributeGroup ref="StudyEventRefAttributeExtension"/>
+      <xs:attribute ref="mdsol:StudyEventDefName"/>
+      <xs:attribute ref="mdsol:StudyEventDefType"/>
+      <xs:attribute ref="mdsol:StudyEventDefRepeating"/>
+    </xs:attributeGroup>
+
+    <!--SubjectData Attribute Extension-->
+    <xs:attributeGroup name="SubjectDataAttributeExtension">
+      <xs:attributeGroup ref="SubjectDataAttributeExtension"/>
+      <xs:attribute ref="mdsol:SecondarySubjectKey"/>
+      <xs:attribute ref="mdsol:SubjectKeyType"/>
+      <xs:attribute ref="mdsol:SubjectName"/>
+
+      <xs:attribute ref="mdsol:Status"/>  <!--Status added by request from a CRO-->
+      <xs:attribute ref="mdsol:Overdue"/>
+      <xs:attribute ref="mdsol:Touched"/>
+      <xs:attribute ref="mdsol:Empty"/>
+      <xs:attribute ref="mdsol:Incomplete"/>
+      <xs:attribute ref="mdsol:NonConformant"/>
+      <xs:attribute ref="mdsol:RequiresSecondPass"/>
+      <xs:attribute ref="mdsol:RequiresReconciliation"/>
+      <xs:attribute ref="mdsol:RequiresVerification"/>
+      <xs:attribute ref="mdsol:Verified"/>
+      <xs:attribute ref="mdsol:Frozen"/>
+      <xs:attribute ref="mdsol:Locked"/>
+      <xs:attribute ref="mdsol:RequiresReview"/>
+      <xs:attribute ref="mdsol:PendingReview"/>
+      <xs:attribute ref="mdsol:Reviewed"/>
+      <xs:attribute ref="mdsol:RequiresAnswerQuery"/>
+      <xs:attribute ref="mdsol:RequiresPendingCloseQuery"/>
+      <xs:attribute ref="mdsol:RequiresCloseQuery"/>
+      <xs:attribute ref="mdsol:StickyPlaced"/>
+      <xs:attribute ref="mdsol:Signed"/>
+      <xs:attribute ref="mdsol:SignatureCurrent"/>
+      <xs:attribute ref="mdsol:RequiresTranslation"/>
+      <xs:attribute ref="mdsol:RequiresCoding"/>
+      <xs:attribute ref="mdsol:RequiresPendingAnswerQuery"/>
+      <xs:attribute ref="mdsol:RequiresSignature"/>
+      <xs:attribute ref="mdsol:ReadyForFreeze"/>
+      <xs:attribute ref="mdsol:ReadyForLock"/>
+
+      <xs:attribute ref="mdsol:SubjectActive" />
+      <xs:attribute ref="mdsol:Deleted" />
+    </xs:attributeGroup>
+
+    <!--StudyEventDef extensions metadata -->
+    <xs:attributeGroup name="StudyEventDefAttributeExtension">
+      <xs:attributeGroup ref="StudyEventDefAttributeExtension"/>
+      <xs:attribute ref="mdsol:OrderNumber"/>
+      <xs:attribute ref="mdsol:AccessDays"/>
+      <xs:attribute ref="mdsol:StartWinDays"/>
+      <xs:attribute ref="mdsol:TargetDays"/>
+      <xs:attribute ref="mdsol:EndWinDays"/>
+      <xs:attribute ref="mdsol:OverDueDays"/>
+      <xs:attribute ref="mdsol:CloseDays"/>
+    </xs:attributeGroup>
+    
+    <!--FormDef extensions -->
+    <xs:attributeGroup name="FormDefAttributeExtension">
+      <xs:attributeGroup ref="FormDefAttributeExtension"/>
+      <xs:attribute ref="mdsol:OrderNumber"/>
+      <xs:attribute ref="mdsol:Active"/>
+      <xs:attribute ref="mdsol:Template"/>
+      <xs:attribute ref="mdsol:SignatureRequired"/>
+      <xs:attribute ref="mdsol:LogDirection"/>
+      <xs:attribute ref="mdsol:DoubleDataEntry"/>
+      <xs:attribute ref="mdsol:ConfirmationStyle"/>
+      <xs:attribute ref="mdsol:LinkStudyEventOID"/>
+      <xs:attribute ref="mdsol:LinkFormOID"/>
+    </xs:attributeGroup>
+    <xs:group name="FormDefElementExtension">
+      <xs:sequence>
+        <xs:group ref="FormDefElementExtension"/> 
+        <xs:element ref="mdsol:HelpText" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:ViewRestrictions" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:ViewRestriction" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="mdsol:EntryRestrictions" minOccurs="0" maxOccurs="1"/>        
+        <xs:element ref="mdsol:EntryRestriction" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:group>
+
+    <!--ItemDef extensions metadata -->
+    <xs:attributeGroup name="ItemDefAttributeExtension">
+      <xs:attributeGroup ref="ItemDefAttributeExtension"/>
+      <!--  <xs:attribute ref="mdsol:CodingDictionaryOID" use="optional" />
+    <xs:attribute ref="mdsol:CodingDictionaryVersion" use="optional" /> -->
+      <xs:attribute ref="mdsol:FieldNumber"/>
+      <xs:attribute ref="mdsol:Active"/>
+      <xs:attribute ref="mdsol:ControlType"/>
+      <xs:attribute ref="mdsol:DateTimeFormat"/>
+      <xs:attribute ref="mdsol:AcceptableFileExtensions"/>
+      <xs:attribute ref="mdsol:IndentLevel"/>
+      <xs:attribute ref="mdsol:SourceDocument"/>
+      <xs:attribute ref="mdsol:DefaultValue"/>
+      <xs:attribute ref="mdsol:SASFormat"/>
+      <xs:attribute ref="mdsol:SASLabel"/>
+      <xs:attribute ref="mdsol:QueryFutureDate"/>
+      <xs:attribute ref="mdsol:Visible"/>
+      <xs:attribute ref="mdsol:TranslationRequired"/>
+      <xs:attribute ref="mdsol:ClinicalSignificance"/>
+      <xs:attribute ref="mdsol:QueryNonConformance"/>
+      <xs:attribute ref="mdsol:OtherVisits"/>
+      <xs:attribute ref="mdsol:CanSetItemGroupDate"/>
+      <xs:attribute ref="mdsol:CanSetFormDate"/>
+      <xs:attribute ref="mdsol:CanSetStudyEventDate"/>
+      <xs:attribute ref="mdsol:CanSetSubjectDate"/>
+      <xs:attribute ref="mdsol:DoesNotBreakSignature"/>
+      <xs:attribute ref="mdsol:VisualVerify"/>
+      <xs:attribute ref="mdsol:CodingDictionary"/>
+      <xs:attribute ref="mdsol:VariableOID"/>
+    </xs:attributeGroup>
+    
+    <xs:group name="ItemGroupDefElementExtension">
+      <xs:sequence>
+        <xs:group ref="ItemGroupDefElementExtension"/>
+        <xs:element ref="mdsol:Label" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="mdsol:LabelRef" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:group>
+          
+    <xs:group name="ItemDefElementExtension">
+      <xs:sequence>
+        <xs:group ref="ItemDefElementExtension"/> 
+        <xs:element ref="mdsol:HeaderText" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:HelpText" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:ViewRestrictions" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:ViewRestriction" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="mdsol:EntryRestrictions" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:EntryRestriction" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="mdsol:ReviewGroups" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mdsol:ReviewGroup" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="mdsol:Label" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="mdsol:CodingRequestDef" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:group>
+
+    <!--CodeList extensions metadata-->
+    <xs:attributeGroup name="CodeListItemAttributeExtension">
+      <xs:attributeGroup ref="CodeListItemAttributeExtension"/>
+      <xs:attribute ref="mdsol:OrderNumber"/>
+      <xs:attribute ref="mdsol:Specify"/>
+    </xs:attributeGroup>
+    <!-- <xs:group name="CodeListRefElementExtension">
+      <xs:sequence>
+        <xs:group ref="CodeListRefElementExtension"/> 
+        <xs:element ref="mdsol:CodingRelationItemRef" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:group>-->
+    <!--<xs:group name="ItemDataElementExtension">
+      <xs:sequence>
+        <xs:group ref="ItemDataElementExtension"/> -->
+      <!--<xs:element ref="mdsol:CodedTerm" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="mdsol:QueryText" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:group>
+    <xs:attributeGroup name="ExternalCodeListAttributeExtension">
+      <xs:attributeGroup ref="ExternalCodeListAttributeExtension"/>
+      <xs:attribute ref="mdsol:DictionaryAlgorithm"/>
+    </xs:attributeGroup>-->
+    <xs:group name="ItemRefElementExtension">
+      <xs:sequence>
+        <xs:group ref="ItemRefElementExtension"/>
+        <xs:element ref="mdsol:Attribute" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:group>
+
+    <!--MeasurementUnit extensions metadata-->
+    <xs:attributeGroup name="MeasurementUnitAttributeExtension">
+      <xs:attributeGroup ref="MeasurementUnitAttributeExtension"/>
+      <xs:attribute ref="mdsol:UnitDictionaryName" />
+      <xs:attribute ref="mdsol:StandardUnit" />
+      <xs:attribute ref="mdsol:ConstantA" />
+      <xs:attribute ref="mdsol:ConstantB" />
+      <xs:attribute ref="mdsol:ConstantC" />
+      <xs:attribute ref="mdsol:ConstantK" />
+      <xs:attribute ref="mdsol:OrderNumber" /> 
+    </xs:attributeGroup>
+
+    <!--MeasurementUnitRef extensions  metadata-->
+    <xs:attributeGroup name="MeasurementUnitRefAttributeExtension">
+      <xs:attributeGroup ref="MeasurementUnitRefAttributeExtension"/>
+<!--      <xs:attribute ref="mdsol:OrderNumber" /> -->
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="FormDataAttributeExtension">
+      <xs:attributeGroup ref="FormDataAttributeExtension"/>
+      <xs:attribute ref="mdsol:LaboratoryRef"/>
+      <xs:attribute ref="mdsol:LaboratoryType"/>
+      <xs:attribute ref="mdsol:Submission"/>
+      <!--Lock,Freeze,Verify added by request from a CRO-->
+      <xs:attribute ref="mdsol:Lock" use="optional" />
+      <xs:attribute ref="mdsol:Freeze" use="optional" />
+      <xs:attribute ref="mdsol:Verify" use="optional" />
+	    <xs:attribute ref="mdsol:DataPageName"/>
+      <xs:attribute ref="mdsol:DataPageId" use="optional" />
+    </xs:attributeGroup>
+    
+    <!--ClinicalData Extensions Clinical Data-->
+    <xs:attributeGroup name="ClinicalDataAttributeExtension">
+      <xs:attributeGroup ref="ClinicalDataAttributeExtension"/>
+      <xs:attribute ref="mdsol:StudyOIDType"/>
+      <xs:attribute ref="mdsol:AuditSubCategoryName"/>
+      <xs:attribute ref="mdsol:StudyName"/>
+    </xs:attributeGroup>
+    
+    <!--SiteRef Extensions SiteRef-->
+    <xs:attributeGroup name="SiteRefAttributeExtension">
+      <xs:attributeGroup ref="SiteRefAttributeExtension"/>
+      <xs:attribute ref="mdsol:LocationOIDType"/>
+      <xs:attribute ref="mdsol:SiteNumber"/>
+      <xs:attribute ref="mdsol:StudySiteName"/>
+      <xs:attribute ref="mdsol:SiteUUID"/>
+      <xs:attribute ref="mdsol:LocationName"/>
+    </xs:attributeGroup>
+
+	<!--StudyEventData Extensions StudyEventData-->
+	<xs:attributeGroup name="StudyEventDataAttributeExtension">
+	  <xs:attributeGroup ref="StudyEventDataAttributeExtension"/>
+	  <xs:attribute ref="mdsol:InstanceName"/>
+    <xs:attribute ref="mdsol:InstanceId" use="optional" />
+	<xs:attribute ref="mdsol:InstanceOverDue" use="optional" />
+	<xs:attribute ref="mdsol:InstanceStartWindow" use="optional" />
+	<xs:attribute ref="mdsol:InstanceEndWindow" use="optional" />
+	<xs:attribute ref="mdsol:InstanceClose" use="optional" />
+	<xs:attribute ref="mdsol:InstanceAccess" use="optional" />
+	</xs:attributeGroup>
+
+    <!--Subject Data Element Extensions  Clinical Data-->
+    <xs:group name="SubjectDataElementExtension">
+      <xs:sequence>
+      <xs:group ref="SubjectDataElementExtension"/>
+      <xs:element ref="mdsol:Link" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:group>
+
+    <!--Item Group Extensions Clinical Data-->
+    <xs:attributeGroup name="ItemGroupDataAttributeExtension">
+      <xs:attributeGroup ref="ItemGroupDataAttributeExtension"/>
+      <xs:attribute ref="mdsol:Submission"/>
+      <xs:attribute ref="mdsol:RecordId" use="optional" />
+    </xs:attributeGroup>
+      
+    <!--Item Data attribute Extensions Clinical Data-->
+    <xs:attributeGroup name="ItemDataAttributeExtension">
+      <xs:attributeGroup ref="ItemDataAttributeExtension"/>
+      <xs:attribute ref="mdsol:Lock" use="optional" />
+      <xs:attribute ref="mdsol:Freeze" use="optional" />
+      <xs:attribute ref="mdsol:Verify" use="optional" />
+      <xs:attribute ref="mdsol:TranslatedValue" use="optional" />
+      <xs:attribute ref="mdsol:SpecifyValue" use="optional" />
+      <xs:attribute ref="mdsol:SignatureBroken" use="optional" />
+      <xs:attribute ref="mdsol:CodingTermUUID" use="optional" />
+      <xs:attribute ref="mdsol:CodingContextURI" use="optional"/>
+      <xs:attribute ref="mdsol:UpdatedTimeStamp" use="optional" />
+    </xs:attributeGroup>
+
+    <!--Item Data Star attribute Extensions Clinical Data-->
+    <xs:attributeGroup name="ItemDataStarAttributeExtension">
+      <xs:attributeGroup ref="ItemDataStarAttributeExtension"/>
+      <xs:attribute ref="mdsol:FileName" use="optional" />
+    </xs:attributeGroup>
+
+    <!--Item Data Element Extensions  Clinical Data-->
+    <xs:group name="ItemDataElementExtension">
+      <xs:sequence>
+        <xs:group ref="ItemDataElementExtension"/>
+        <xs:element ref="mdsol:Review" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="mdsol:Query" minOccurs="0" maxOccurs="unbounded" />
+        <!--<xs:element ref="mdsol:Sticky" minOccurs="0" maxOccurs="unbounded" /> -->
+        <xs:element ref="mdsol:ProtocolDeviation" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="mdsol:Comment" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="mdsol:CodingData" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="mdsol:TranslatedData" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="mdsol:DictionaryData" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="mdsol:QueueItem" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="mdsol:LabData" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="mdsol:ClinicalSignificance" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="mdsol:LabAlert" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+    </xs:group>
+
+    <!--AuditRecord attribute Extensions-->
+    <xs:attributeGroup name="AuditRecordAttributeExtension">
+      <xs:attributeGroup ref="AuditRecordAttributeExtension"/>
+      <xs:attribute ref="mdsol:IncludeFileOID" use="optional" />
+    </xs:attributeGroup>
+    
+    <!-- 
+    ProtocolElementExtension is extended by mdsol and sdm, 
+    so include the sdm extensions also !!! 
+    -->
+    <xs:group name="ProtocolElementExtension">
+      <xs:sequence>
+        <xs:group ref="ProtocolElementExtension"/>
+        
+        <!-- taken from sdm-extension.xsd -->
+        <xs:group ref="ProtocolElementContents" />
+        
+        <!-- Ref to the Designer schedule's Periods -->
+        <xs:element ref="mdsol:StudyPeriodRef" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:group>
+
+    <!-- FormRef Extensions -->
+    <xs:attributeGroup name="FormRefAttributeExtension">
+      <xs:attributeGroup ref="FormRefAttributeExtension"/>
+      <!-- Attributes to indicate the continuous event type, start, end visits -->
+      <xs:attribute ref="mdsol:ContinuousEventType"/>
+      <xs:attribute ref="mdsol:ContinuousEventStartStudyEventOID"/>
+      <xs:attribute ref="mdsol:ContinuousEventEndStudyEventOID"/>
+    </xs:attributeGroup>
+
+    <!-- taken from sdm-extension.xsd -->    
+    <xs:group name="StudyEventDefElementExtension">
+      <xs:sequence>
+        <xs:group ref="StudyEventDefElementExtension" />
+        <xs:group ref="StudyEventDefElementContents" />
+      </xs:sequence>
+    </xs:group>
+  </xs:redefine>
+  
+  <!-- taken from sdm-extension.xsd -->  
+  <xs:group name="ProtocolElementContents">
+    <xs:sequence>
+      <xs:element ref="sdm:Summary" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="sdm:InclusionExclusionCriteria" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="sdm:Structure" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="sdm:Workflow" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="sdm:Timing" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:group>
+
+  <!-- taken from sdm-extension.xsd -->
+  <xs:group name="StudyEventDefElementContents">
+    <xs:sequence>
+      <xs:element ref="sdm:ActivityRef" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:group>
+  
+</xs:schema>
+

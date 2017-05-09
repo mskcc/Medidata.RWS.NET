@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,10 +44,148 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Core\DataBuilders\AuditRecordBuilder.cs" />
+    <Compile Include="Core\DataBuilders\Builds.cs" />
+    <Compile Include="Core\DataBuilders\ClinicalDataBuilder.cs" />
+    <Compile Include="Core\DataBuilders\FormDataBuilder.cs" />
+    <Compile Include="Core\DataBuilders\ItemDataBuilder.cs" />
+    <Compile Include="Core\DataBuilders\ItemGroupDataBuilder.cs" />
+    <Compile Include="Core\DataBuilders\ODMBuilder.cs" />
+    <Compile Include="Core\DataBuilders\StudyEventDataBuilder.cs" />
+    <Compile Include="Core\DataBuilders\SubjectDataBuilder.cs" />
+    <Compile Include="Core\DataBuilders\Validatable.cs" />
+    <Compile Include="Core\Exceptions\AuthenticationException.cs" />
+    <Compile Include="Core\Exceptions\RWSException.cs" />
+    <Compile Include="Core\Requests\Biostat Adapter\ClinicalViewMetaDataRequest.cs" />
+    <Compile Include="Core\Requests\Biostat Adapter\DataDictionariesRequest.cs" />
+    <Compile Include="Core\Requests\Biostat Adapter\FormattedDataSetRequest.cs" />
+    <Compile Include="Core\Requests\BuildVersionRequest.cs" />
+    <Compile Include="Core\Requests\CacheFlushRequest.cs" />
+    <Compile Include="Core\Requests\Datasets\StudyDatasetRequest.cs" />
+    <Compile Include="Core\Requests\Datasets\SubjectDatasetRequest.cs" />
+    <Compile Include="Core\Requests\Implementations\ClinicalStudiesRequest.cs" />
+    <Compile Include="Core\Requests\Implementations\MetadataStudiesRequest.cs" />
+    <Compile Include="Core\Requests\Implementations\PostDataRequest.cs" />
+    <Compile Include="Core\Requests\Implementations\StudyDraftsRequest.cs" />
+    <Compile Include="Core\Requests\Implementations\StudySubjectsRequest.cs" />
+    <Compile Include="Core\Requests\Implementations\StudyVersionRequest.cs" />
+    <Compile Include="Core\Requests\Implementations\StudyVersionsRequest.cs" />
+    <Compile Include="Core\Requests\Implementations\VersionRequestBase.cs" />
+    <Compile Include="Core\Requests\IRWSRequest.cs" />
+    <Compile Include="Core\Requests\ODM Adapter\AuditRecordsRequest.cs" />
+    <Compile Include="Core\Requests\ODM Adapter\SignatureDefinitionsRequest.cs" />
+    <Compile Include="Core\Requests\ODM Adapter\SitesRequest.cs" />
+    <Compile Include="Core\Requests\ODM Adapter\UsersRequest.cs" />
+    <Compile Include="Core\Requests\ODM Adapter\VersionFoldersRequest.cs" />
+    <Compile Include="Core\Requests\OdmDatasetBase.cs" />
+    <Compile Include="Core\Requests\QueryOptionGetRequest.cs" />
+    <Compile Include="Core\Requests\RequestHelpers.cs" />
+    <Compile Include="Core\Requests\RWSAuthorizedGetRequest.cs" />
+    <Compile Include="Core\Requests\RWSAuthorizedPostRequest.cs" />
     <Compile Include="Core\Requests\RWSConnection.cs" />
+    <Compile Include="Core\Requests\RWSGetRequest.cs" />
+    <Compile Include="Core\Requests\RWSPostRequest.cs" />
+    <Compile Include="Core\Requests\RWSRequest.cs" />
+    <Compile Include="Core\Requests\TwoHundredRequest.cs" />
+    <Compile Include="Core\Requests\VersionRequest.cs" />
+    <Compile Include="Core\Responses\IRWSResponse.cs" />
+    <Compile Include="Core\Responses\RWSError.cs" />
+    <Compile Include="Core\Responses\RWSErrorResponse.cs" />
+    <Compile Include="Core\Responses\RWSPostErrorResponse.cs" />
+    <Compile Include="Core\Responses\RWSPostResponse.cs" />
+    <Compile Include="Core\Responses\RWSResponse.cs" />
+    <Compile Include="Core\Responses\RWSTextResponse.cs" />
+    <Compile Include="Core\Responses\RWSXMLResponse.cs" />
+    <Compile Include="Core\RWSHelpers.cs" />
+    <Compile Include="Core\RWSObjects\RWSMetaDataVersion.cs" />
+    <Compile Include="Core\RWSObjects\RWSStudies.cs" />
+    <Compile Include="Core\RWSObjects\RWSStudyListItem.cs" />
+    <Compile Include="Core\RWSObjects\RWSStudyMetadataVersions.cs" />
+    <Compile Include="Core\RWSObjects\RWSSubjectListItem.cs" />
+    <Compile Include="Core\RWSObjects\RWSSubjects.cs" />
+    <Compile Include="Extras\AbstractParser.cs" />
+    <Compile Include="Extras\AuditEvent\AuditEventParser.cs" />
+    <Compile Include="Extras\AuditEvent\AuditRecord.cs" />
+    <Compile Include="Extras\AuditEvent\Comment.cs" />
+    <Compile Include="Extras\AuditEvent\Context.cs" />
+    <Compile Include="Extras\AuditEvent\ContextBuiltEventHandler.cs" />
+    <Compile Include="Extras\AuditEvent\ContextContainer.cs" />
+    <Compile Include="Extras\AuditEvent\Form.cs" />
+    <Compile Include="Extras\AuditEvent\IAuditEventParser.cs" />
+    <Compile Include="Extras\AuditEvent\ISubscriber.cs" />
+    <Compile Include="Extras\AuditEvent\Item.cs" />
+    <Compile Include="Extras\AuditEvent\ItemGroup.cs" />
+    <Compile Include="Extras\AuditEvent\ODMAdapter.cs" />
+    <Compile Include="Extras\AuditEvent\PageProcessedEventHandler.cs" />
+    <Compile Include="Extras\AuditEvent\ParsingCompleteEventHandler.cs" />
+    <Compile Include="Extras\AuditEvent\ProtocolDeviation.cs" />
+    <Compile Include="Extras\AuditEvent\Query.cs" />
+    <Compile Include="Extras\AuditEvent\Review.cs" />
+    <Compile Include="Extras\AuditEvent\Signature.cs" />
+    <Compile Include="Extras\AuditEvent\StudyEvent.cs" />
+    <Compile Include="Extras\AuditEvent\Subject.cs" />
+    <Compile Include="Extras\ClinicalViewMetadataParser.cs" />
+    <Compile Include="Extras\IParser.cs" />
+    <Compile Include="ODM Schema\Extensions.cs" />
+    <Compile Include="ODM Schema\NamespaceDoc.cs" />
+    <Compile Include="ODM Schema\ODM1-3-1.Designer.cs" />
+    <Compile Include="ODM Schema\ODMcomplexTypeDefinitionClinicalData_extend.cs" />
+    <Compile Include="ODM Schema\ODMcomplexTypeDefinitionStudy_extend.cs" />
+    <Compile Include="ODM Schema\ODMcomplexTypeDefinitionSubjectData_extend.cs" />
+    <Compile Include="ODM Schema\ODM_extend.cs" />
+    <Compile Include="PageLinks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ODM Schema\mdsol-extension.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\mdsol-ns.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\mdsol-sdm-extension.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\mdsol.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\ODM1-3-1-foundation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\ODM1-3-1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\sdm-extension.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\sdm-ns-common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\sdm-ns-structure.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\sdm-ns-timing.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\sdm-ns-workflow.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\sdm-ns.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\sdm1-0-0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ODM Schema\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

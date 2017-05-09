@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.cdisc.org/ns/odm/v1.3" 
+           xmlns="http://www.cdisc.org/ns/odm/v1.3"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0" 
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+   
+    <!-- include TDM extensions to core ODM -->
+    <xs:include schemaLocation="sdm-extension.xsd"/>
+
+</xs:schema>

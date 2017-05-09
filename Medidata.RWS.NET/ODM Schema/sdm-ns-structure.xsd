@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.cdisc.org/ns/studydesign/v1.0" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:odm="http://www.cdisc.org/ns/odm/v1.3" 
+           xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0" 
+           elementFormDefault="qualified" 
+           attributeFormDefault="unqualified">
+
+	<xs:annotation>
+		<xs:documentation>Structural definitions</xs:documentation>
+	</xs:annotation>
+           
+   <xs:import namespace="http://www.cdisc.org/ns/odm/v1.3" schemaLocation="ODM1-3-1.xsd"/>
+   <xs:include schemaLocation="sdm-ns-common.xsd"/>
+
+   <xs:element name="Structure" type="sdm:SDMcomplexTypeDefinition-Structure"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-Structure">
+      <xs:annotation>
+        <xs:documentation>Structure is a container for all SDM structural elements.  It is placed inside a ODM Protocol
+        element in order to extend on ODM file with SDM structural definitions.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:group ref="sdm:StructureElementPreExtension" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="sdm:Epoch" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of epoch definitions</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:element ref="sdm:Arm" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of arm definitions</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:element ref="sdm:CellDef" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of cell definitions</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:element ref="sdm:SegmentDef" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of segment definitions</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:element ref="sdm:ActivityDef" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of activity definitions</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:group ref="sdm:StructureElementPostExtension" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="sdm:StructureAttributeExtension"/>
+   </xs:complexType>
+        
+   <xs:element name="Summary" type="sdm:SDMcomplexTypeDefinition-Summary"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-Summary">
+      <xs:annotation>
+        <xs:documentation>The Summary element provides the ability to define a set of parameters to the study design. 
+        It is placed inside a ODM Protocol element in order to extend on ODM file with SDM structural definitions.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:group ref="sdm:SummaryElementPreExtension" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+         	<xs:annotation><xs:documentation>Description of summary</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:element ref="sdm:Parameter" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of parameters</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:group ref="sdm:SummaryElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="sdm:SummaryAttributeExtension"/>
+   </xs:complexType>
+
+   <xs:element name="Parameter" type="sdm:SDMcomplexTypeDefinition-Parameter" />
+   <xs:complexType name="SDMcomplexTypeDefinition-Parameter">
+      <xs:annotation><xs:documentation>Study parameter</xs:documentation></xs:annotation>
+     <xs:sequence>
+       <xs:group ref="sdm:ParameterElementPreExtension" minOccurs="0" maxOccurs="1"/>
+       <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+         	<xs:annotation><xs:documentation>Parameter description</xs:documentation></xs:annotation>
+       </xs:element>
+       <xs:element name="Value" type="odm:value" minOccurs="1" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>Parameter value(s)</xs:documentation></xs:annotation>
+       </xs:element>
+       <xs:group ref="sdm:ParameterElementPostExtension" minOccurs="0" maxOccurs="1"/>
+     </xs:sequence>
+     <xs:attribute name="OID" type="odm:oid" use="required">
+     	<xs:annotation><xs:documentation>Unique identifier for the parameter</xs:documentation></xs:annotation>
+     </xs:attribute>
+     <xs:attribute name="Term" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>Parameter term</xs:documentation></xs:annotation>
+      </xs:attribute>
+     <xs:attribute name="ShortName" type="odm:string" use="optional">
+      	<xs:annotation><xs:documentation>Parameter short name</xs:documentation></xs:annotation>
+      </xs:attribute>
+     <xs:attributeGroup ref="sdm:ParameterAttributeExtension"/>
+   </xs:complexType>
+
+   <xs:element name="InclusionExclusionCriteria" type="sdm:SDMcomplexTypeDefinition-InclusionExclusionCriteria"/> 
+   <xs:complexType name="SDMcomplexTypeDefinition-InclusionExclusionCriteria">
+      <xs:annotation><xs:documentation>Container element for inclusion and exclution criteria</xs:documentation></xs:annotation>
+      <xs:sequence>
+         <xs:group ref="sdm:InclusionExclusionCriteriaElementPreExtension" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+         	<xs:annotation><xs:documentation>Description of the inclusion/exclusion criteria</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:element ref="sdm:InclusionCriteria" minOccurs="0" maxOccurs="1">
+         	<xs:annotation><xs:documentation>Inclusion criteria container</xs:documentation></xs:annotation>         
+         </xs:element>
+         <xs:element ref="sdm:ExclusionCriteria" minOccurs="0" maxOccurs="1">
+         	<xs:annotation><xs:documentation>Exclusion criteria container</xs:documentation></xs:annotation>         
+         </xs:element>
+         <xs:group ref="sdm:InclusionExclusionCriteriaElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="sdm:InclusionExclusionCriteriaAttributeExtension"/>
+   </xs:complexType>
+   
+   <xs:element name="InclusionCriteria" type="sdm:SDMcomplexTypeDefinition-InclusionCriteria"/> 
+   <xs:complexType name="SDMcomplexTypeDefinition-InclusionCriteria">
+      <xs:annotation><xs:documentation>Container element for inclusion criteria</xs:documentation></xs:annotation>
+      <xs:sequence>
+         <xs:group ref="sdm:InclusionCriteriaElementPreExtension" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="sdm:Criterion" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of criterion forming the inclusion criteria</xs:documentation></xs:annotation>         
+         </xs:element>
+         <xs:group ref="sdm:InclusionCriteriaElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="sdm:InclusionCriteriaAttributeExtension"/>
+   </xs:complexType>
+   
+   <xs:element name="ExclusionCriteria" type="sdm:SDMcomplexTypeDefinition-ExclusionCriteria"/> 
+   <xs:complexType name="SDMcomplexTypeDefinition-ExclusionCriteria">
+      <xs:annotation><xs:documentation>Container element for exclusion criteria</xs:documentation></xs:annotation>
+      <xs:sequence>
+         <xs:group ref="sdm:ExclusionCriteriaElementPreExtension" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="sdm:Criterion" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of criterion forming the exclusion criteria</xs:documentation></xs:annotation>         
+         </xs:element>
+         <xs:group ref="sdm:ExclusionCriteriaElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="sdm:ExclusionCriteriaAttributeExtension"/>
+   </xs:complexType>
+
+   <xs:element name="Epoch" type="sdm:SDMcomplexTypeDefinition-Epoch"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-Epoch">
+      <xs:annotation>
+        <xs:documentation>An Epoch element represents the information about the study's Epochs.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:group ref="sdm:EpochElementPreExtension" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+         	<xs:annotation><xs:documentation>Epoch description</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:group ref="sdm:EpochElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="OID" type="odm:oid" use="required">
+      	<xs:annotation><xs:documentation>Unique identifier for the epoch</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Name" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>Short name for the epoch</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="OrderNumber" type="odm:integer" use="optional">
+      <xs:annotation>
+      	<xs:documentation>Optional order number indicating the order in which the Epochs occur within in study.
+      		Either all Epochs within the containing Structure element must have an OrderNumber, or none of the Epochs may have an OrderNumber.
+      		When OrderNumber is used, each Epoch element within its parent Structure element must have unique OrderNumber value.
+      	</xs:documentation></xs:annotation>
+    	</xs:attribute>
+      <xs:attributeGroup ref="sdm:EpochAttributeExtension"/>
+   </xs:complexType>   
+
+   <xs:element name="Arm" type="sdm:SDMcomplexTypeDefinition-Arm"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-Arm">
+      <xs:annotation>
+        <xs:documentation>An Arm element provides the declaration of a study arm.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:group ref="sdm:ArmElementPreExtension" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+         	<xs:annotation><xs:documentation>Arm description</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:group ref="sdm:ArmElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="OID" type="odm:oid" use="required">
+      	<xs:annotation><xs:documentation>Unique identifier for the arm</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Name" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>Short name for the arm</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attributeGroup ref="sdm:ArmAttributeExtension"/>
+   </xs:complexType>  
+
+   <xs:element name="CellDef" type="sdm:SDMcomplexTypeDefinition-CellDef"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-CellDef">
+      <xs:annotation>
+        <xs:documentation>A CellDef provides for the declaration of a study cell, which is a common study-design 
+        visualization for the intersection of an epoch with an arm.</xs:documentation>
+      </xs:annotation>
+     <xs:sequence>
+       <xs:group ref="sdm:CellDefElementPreExtension" minOccurs="0" maxOccurs="1"/>
+       <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+       	<xs:annotation><xs:documentation>Cell description</xs:documentation></xs:annotation>
+       </xs:element>
+       <xs:element ref="sdm:ArmAssociation" minOccurs="0" maxOccurs="1">
+       		<xs:annotation><xs:documentation>Container for definition association between cells and arms</xs:documentation></xs:annotation>
+       </xs:element>
+       <xs:element ref="sdm:SegmentRef" minOccurs="0" maxOccurs="unbounded">
+       	<xs:annotation><xs:documentation>List of segments contained in the cell.</xs:documentation></xs:annotation>       
+       </xs:element>
+       <xs:group ref="sdm:CellDefElementPostExtension" minOccurs="0" maxOccurs="1"/>
+     </xs:sequence>
+     <xs:attribute name="OID" type="odm:oid" use="required">
+     	<xs:annotation><xs:documentation>Unique identifier for the cell</xs:documentation></xs:annotation>
+     </xs:attribute>
+     <xs:attribute name="Name" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>Short name for the cell</xs:documentation></xs:annotation>
+      </xs:attribute>
+     <xs:attribute name="EpochOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>OID of the Epoch in which the cell is contained.</xs:documentation></xs:annotation>
+      </xs:attribute>
+     <xs:attributeGroup ref="sdm:CellDefAttributeExtension"/>
+   </xs:complexType>
+
+   <xs:element name="ArmAssociation" type="sdm:SDMcomplexTypeDefinition-ArmAssociation" />
+   <xs:complexType name="SDMcomplexTypeDefinition-ArmAssociation">
+      <xs:annotation>
+        <xs:documentation>A ArmAssociation links cell definitions to arms.</xs:documentation>
+      </xs:annotation>
+     <xs:sequence>
+       <xs:group ref="sdm:ArmAssociationElementPreExtension" minOccurs="0" maxOccurs="1"/>
+       <xs:element ref="sdm:ArmRef" minOccurs="1" maxOccurs="unbounded">
+       	<xs:annotation><xs:documentation>List of references to Arms</xs:documentation></xs:annotation>
+       </xs:element>
+       <xs:group ref="sdm:ArmAssociationElementPostExtension" minOccurs="0" maxOccurs="1"/>
+     </xs:sequence>
+     <xs:attribute name="Type" type="sdm:blindunblind" use="required">
+      	<xs:annotation><xs:documentation>Indication of whether or not the arms are blinded of not</xs:documentation></xs:annotation>
+      </xs:attribute>
+     <xs:attributeGroup ref="sdm:ArmAssociationAttributeExtension"/>
+   </xs:complexType>
+
+   <xs:element name="ArmRef" type="sdm:SDMcomplexTypeDefinition-ArmRef"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-ArmRef">
+      <xs:annotation>
+        <xs:documentation>An ArmRef is used within ArmAssocation to link cell definitions to arms.</xs:documentation>
+      </xs:annotation>
+     <xs:group ref="sdm:ArmRefElementExtension" minOccurs="0" maxOccurs="1"/>
+     <xs:attribute name="ArmOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>OID of the references ArmDef</xs:documentation></xs:annotation>
+      </xs:attribute>
+     <xs:attributeGroup ref="sdm:ArmRefAttributeExtension"/>
+   </xs:complexType> 
+
+   <xs:element name="SegmentRef" type="sdm:SDMcomplexTypeDefinition-SegmentRef" />
+   <xs:complexType name="SDMcomplexTypeDefinition-SegmentRef">
+      <xs:annotation>
+        <xs:documentation>A SegmentRef links cell definitions to segments.</xs:documentation>
+      </xs:annotation>
+     <xs:group ref="sdm:SegmentRefElementExtension" minOccurs="0" maxOccurs="1"/>
+     <xs:attribute name="SegmentOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>OID of the referenced SegmentDef</xs:documentation></xs:annotation>
+      </xs:attribute>
+     <xs:attribute name="OrderNumber" type="odm:integer" use="optional">
+      	<xs:annotation><xs:documentation>Optional ordering of segments within parent element (overrides document order)</xs:documentation></xs:annotation>
+      </xs:attribute>
+     <xs:attributeGroup ref="sdm:SegmentRefAttributeExtension"/>
+   </xs:complexType>
+
+   <xs:element name="SegmentDef" type="sdm:SDMcomplexTypeDefinition-SegmentDef"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-SegmentDef">
+      <xs:annotation>
+        <xs:documentation>A SegmentDef represents a set of activities. Each segment must be referenced by a cell via a SegmentRef within a CellDef.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:group ref="sdm:SegmentDefElementPreExtension" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+         	<xs:annotation><xs:documentation>Segment description</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:element ref="sdm:ActivityRef" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of references to activities which are contained in the segment.</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:group ref="sdm:SegmentDefElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="OID" type="odm:oid" use="required">
+      	<xs:annotation><xs:documentation>Unique identifier for the segment</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Name" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>Short name for the segment</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attributeGroup ref="sdm:SegmentDefAttributeExtension"/>
+   </xs:complexType> 
+
+   <xs:element name="ActivityRef" type="sdm:SDMcomplexTypeDefinition-ActivityRef"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-ActivityRef">
+      <xs:annotation>
+        <xs:documentation>An ActivityRef is used in multiple locations to link the containing definition to an activity.
+        When used within an odm:StudyEventDef and the referenced activity contains FormRefs, those Forms must also be
+        linke directly from within the StudyEventDef.</xs:documentation>
+      </xs:annotation>
+      <xs:group ref="sdm:ActivityRefElementExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:attribute name="ActivityOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>OID of the referenced ActivityDef</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="OrderNumber" type="odm:integer" use="optional">
+      	<xs:annotation><xs:documentation>Optional ordering of activities within parent element (overrides document order)</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attributeGroup ref="sdm:ActivityRefAttributeExtension"/>
+   </xs:complexType>     
+         
+   <xs:element name="ActivityDef" type="sdm:SDMcomplexTypeDefinition-ActivityDef"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-ActivityDef">
+      <xs:annotation>
+        <xs:documentation>An ActivityDef represents a point in a study at which a specific actions are to be taken.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:group ref="sdm:ActivityDefElementPreExtension" minOccurs="0" maxOccurs="1"/>
+         <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+         	<xs:annotation><xs:documentation>Activity description</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:element ref="odm:FormRef" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>List of references to odm:FormDefs which are to be collected.  Indicates that the activity is a data collection activity.</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:group ref="sdm:ActivityDefElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="OID" type="odm:oid" use="required">
+      	<xs:annotation><xs:documentation>Unique identifier for the activity</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Name" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>Short name for the activity</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attributeGroup ref="sdm:ActivityDefAttributeExtension"/>
+   </xs:complexType>                             
+    
+         
+   <!--  
+     +===========================================================================+
+     | Simple Types/Enumerations                                                 |
+     +===========================================================================+
+   -->  
+   <xs:simpleType name="blindunblind">
+     <xs:annotation>
+       <xs:documentation>Specifies arm association as blinded or unblinded.</xs:documentation>
+     </xs:annotation>
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="Blinded" />
+       <xs:enumeration value="Unblinded" />
+     </xs:restriction>
+   </xs:simpleType>
+
+
+   <!--  
+     +===========================================================================+
+     | these are purposely empty attributeGroups to permit vendor extensions to  |
+     | the corresponding elements via the standard XML-Schema redefine mechanism |
+     +===========================================================================+
+   -->
+   <xs:attributeGroup name="StructureAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="SummaryAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="ParameterAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="InclusionExclusionCriteriaAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="InclusionCriteriaAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="ExclusionCriteriaAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="EpochAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="ArmAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="CellDefAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="ArmAssociationAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="SegmentRefAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="ArmRefAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="SegmentDefAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="ActivityRefAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="ActivityDefAttributeExtension"></xs:attributeGroup>
+         
+   
+   <!--  
+     +===========================================================================+
+     | these are purposely empty modelGroups to permit vendor extensions to the  |
+     | corresponding elements via the standard XML-Schema redefine mechanism     |
+     +===========================================================================+
+   -->
+   <xs:group name="StructureElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="StructureElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="SummaryElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="SummaryElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="ParameterElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="ParameterElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="InclusionExclusionCriteriaElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="InclusionExclusionCriteriaElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="InclusionCriteriaElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="InclusionCriteriaElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="ExclusionCriteriaElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="ExclusionCriteriaElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="EpochElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="EpochElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="ArmElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="ArmElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="CellDefElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="CellDefElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="ArmAssociationElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="ArmAssociationElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="SegmentRefElementExtension"><xs:sequence/></xs:group>
+   <xs:group name="ArmRefElementExtension"><xs:sequence/></xs:group>
+   <xs:group name="SegmentDefElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="SegmentDefElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="ActivityRefElementExtension"><xs:sequence/></xs:group>
+   <xs:group name="ActivityDefElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="ActivityDefElementPostExtension"><xs:sequence/></xs:group>
+                        
+</xs:schema>

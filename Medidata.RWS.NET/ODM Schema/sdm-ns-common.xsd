@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../schemadoc/xsls/SchemaDocSDM.xsl"?>
+<xs:schema targetNamespace="http://www.cdisc.org/ns/studydesign/v1.0" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:odm="http://www.cdisc.org/ns/odm/v1.3" 
+           xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0" 
+           elementFormDefault="qualified" 
+           attributeFormDefault="unqualified">
+
+	<xs:annotation>
+		<xs:documentation>Common definitions</xs:documentation>
+	</xs:annotation>
+           
+           
+   <xs:import namespace="http://www.cdisc.org/ns/odm/v1.3" schemaLocation="ODM1-3-1.xsd"/>
+
+   <!--  
+     +===========================================================================+
+     | Definitions that are common to all submodules                             |
+     +===========================================================================+
+   -->
+  <xs:element name="Criterion" type="sdm:SDMcomplexTypeDefinition-Criterion" />
+  <xs:complexType name="SDMcomplexTypeDefinition-Criterion">
+	  <xs:annotation><xs:documentation>Defines a criterion which is to be evaluated at runtime to influence workflow.</xs:documentation></xs:annotation>
+    <xs:sequence>
+    	<xs:group ref="sdm:CriterionElementPreExtension" minOccurs="0" maxOccurs="1"/>
+    	<xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+    		<xs:annotation><xs:documentation>Criterion description.</xs:documentation></xs:annotation>
+    	</xs:element>
+    	<xs:group ref="sdm:CriterionElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="OID" type="odm:oid" use="required">
+    	<xs:annotation><xs:documentation>Unique identifier for the criterion</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Name" type="odm:name" use="required">
+    	<xs:annotation><xs:documentation>Short name for the criterion</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ConditionOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>Reference to the a ConditionDef</xs:documentation></xs:annotation>
+      </xs:attribute>
+    <xs:attributeGroup ref="sdm:CriterionAttributeExtension"/>
+  </xs:complexType>
+  
+   <!--  
+     +===========================================================================+
+     | these are purposely empty attributeGroups to permit vendor extensions to  |
+     | the corresponding elements via the standard XML-Schema redefine mechanism |
+     +===========================================================================+
+   -->
+   <xs:attributeGroup name="CriterionAttributeExtension"></xs:attributeGroup>
+
+
+   <!--  
+     +===========================================================================+
+     | these are purposely empty modelGroups to permit vendor extensions to the  |
+     | corresponding elements via the standard XML-Schema redefine mechanism     |
+     +===========================================================================+
+   -->
+   <xs:group name="CriterionElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="CriterionElementPostExtension"><xs:sequence/></xs:group>
+                        
+</xs:schema>

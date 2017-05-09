@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.cdisc.org/ns/studydesign/v1.0" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:odm="http://www.cdisc.org/ns/odm/v1.3" 
+           xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.cdisc.org/ns/odm/v1.3" schemaLocation="ODM1-3-1.xsd" />
+
+   <!--  
+     +===========================================================================+
+     | Bind the submodules together                                              |
+     +===========================================================================+
+   -->
+  <xs:include schemaLocation="sdm-ns-common.xsd" />
+  <xs:include schemaLocation="sdm-ns-structure.xsd" />
+  <xs:include schemaLocation="sdm-ns-workflow.xsd" />
+  <xs:include schemaLocation="sdm-ns-timing.xsd" />
+
+</xs:schema>

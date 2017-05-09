@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.cdisc.org/ns/studydesign/v1.0" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:odm="http://www.cdisc.org/ns/odm/v1.3" 
+           xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:annotation>
+		<xs:documentation>Workflow definitions</xs:documentation>
+	</xs:annotation>
+           
+  <xs:import namespace="http://www.cdisc.org/ns/odm/v1.3" schemaLocation="ODM1-3-1.xsd" />
+  <xs:include schemaLocation="sdm-ns-common.xsd" />
+  <xs:include schemaLocation="sdm-ns-structure.xsd" />
+
+  <xs:element name="Workflow" type="sdm:SDMcomplexTypeDefinition-Workflow" />
+  <xs:complexType name="SDMcomplexTypeDefinition-Workflow">
+  	<xs:annotation><xs:documentation>The Workflow element describes the workflow between activities in the study.</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:WorkflowElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="sdm:StudyStart" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>References the Activity that acts as the study start</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:StudyFinish" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>References the Activity that acts as the study finish</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:PathCanFinish" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Specifies activities that are allowed to be at the end of a workflow path</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:EntryExitCriteria" minOccurs="0" maxOccurs="unbounded">
+      	<xs:annotation><xs:documentation>List of entry- and exit criteria for structural elements</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+         <xs:element ref="sdm:Transition" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>A set of potential branches in the workflow</xs:documentation></xs:annotation>
+         </xs:element>
+         <xs:element ref="sdm:Trigger" minOccurs="0" maxOccurs="unbounded">
+         	<xs:annotation><xs:documentation>Trigger for unplanned activities</xs:documentation></xs:annotation>
+         </xs:element>
+      </xs:choice>
+      <xs:group ref="sdm:WorkflowElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="sdm:WorkflowAttributeExtension"/>
+  </xs:complexType>
+
+  <xs:element name="EntryExitCriteria" type="sdm:SDMcomplexTypeDefinition-EntryExitCriteria">
+  	<xs:annotation><xs:documentation>Entry and exit criteria for structural elements</xs:documentation></xs:annotation>
+  </xs:element>
+  <xs:complexType name="SDMcomplexTypeDefinition-EntryExitCriteria">
+  	<xs:annotation><xs:documentation>The EntryExitCriteria element describes the criteria for allowing a subject to enter or exit a structural element such as an activity, a segment, a study event, a cell, an epoch, or the study as a whole.</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:EntryExitCriteriaElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Description of the criteria</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:EntryCriteria" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>List of entry criteria</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:ExitCriteria" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>List of exit criteria</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:group ref="sdm:EntryExitCriteriaElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="OID" type="odm:oid" use="required">
+    	<xs:annotation><xs:documentation>Unique identifier</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Name" type="odm:name" use="required">
+    	<xs:annotation><xs:documentation>Short name or description</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="StructuralElementType" type="sdm:structuralelementtype" use="required">
+    	<xs:annotation><xs:documentation>The structural element type on which the set of entry/exit criteria applies</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="StructuralElementOID" type="odm:oidref" use="required">
+    	<xs:annotation><xs:documentation>The OID of the structural element on which the set of entry/exit criteria applies.
+    	The referenced structural element must be of the type given by the StructuralElementType attribute</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="sdm:EntryExitCriteriaAttributeExtension"/>
+  </xs:complexType>
+
+  <xs:element name="EntryCriteria" type="sdm:SDMcomplexTypeDefinition-EntryCriteria" />
+  <xs:complexType name="SDMcomplexTypeDefinition-EntryCriteria">
+  	<xs:annotation><xs:documentation>The EntryCriteria element describes the criteria for allowing a subject to enter a structural element</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:EntryCriteriaElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="sdm:IncludeInclusionExclusionCriteria" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Include Inclusion/Exclusion criteria in entry criteria</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:Criterion" minOccurs="0" maxOccurs="unbounded">
+      	<xs:annotation><xs:documentation>Definition of a single entry criterion</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:group ref="sdm:EntryCriteriaElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="sdm:EntryCriteriaAttributeExtension"/>
+  </xs:complexType>
+
+  <xs:element name="ExitCriteria" type="sdm:SDMcomplexTypeDefinition-ExitCriteria" />
+  <xs:complexType name="SDMcomplexTypeDefinition-ExitCriteria">
+  	<xs:annotation><xs:documentation>The ExitCriteria element describes the criteria for allowing a subject to exit a structural element</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:ExitCriteriaElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="sdm:IncludeInclusionExclusionCriteria" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Include Inclusion/Exclusion criteria in exit criteria</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:Criterion" minOccurs="0" maxOccurs="unbounded">
+      	<xs:annotation><xs:documentation>Definition of a single exit criterion</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:group ref="sdm:ExitCriteriaElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="sdm:ExitCriteriaAttributeExtension"/>
+  </xs:complexType>
+
+  <xs:element name="IncludeInclusionExclusionCriteria" type="sdm:SDMcomplexTypeDefinition-IncludeInclusionExclusionCriteria" />
+  <xs:complexType name="SDMcomplexTypeDefinition-IncludeInclusionExclusionCriteria">
+  	<xs:annotation><xs:documentation>Include Inclusion/Exclusion criteria in entry or exit criteria of a structural element</xs:documentation></xs:annotation>
+    <xs:attributeGroup ref="sdm:IncludeInclusionExclusionCriteriaAttributeExtension"/>
+  </xs:complexType>
+  
+  <xs:element name="Transition" type="sdm:SDMcomplexTypeDefinition-Transition" />
+  <xs:complexType name="SDMcomplexTypeDefinition-Transition">
+  	<xs:annotation><xs:documentation>The Transition element specifies the set of potential branches that could be followed after completion of a given activity</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:TransitionElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Description of the transition</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:Switch" minOccurs="1" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Set of transition destinations</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:group ref="sdm:TransitionElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="OID" type="odm:oid" use="required">
+    	<xs:annotation><xs:documentation>Unique identifier for the transition</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Name" type="odm:name" use="required">
+    	<xs:annotation><xs:documentation>Short name or description for the transition</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="SourceActivityOID" type="odm:oidref" use="required">
+    	<xs:annotation><xs:documentation>Reference to the activity from which the transition originates</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="sdm:TransitionAttributeExtension"/>
+  </xs:complexType>
+
+  <xs:element name="Switch" type="sdm:SDMcomplexTypeDefinition-Switch" />
+  <xs:complexType name="SDMcomplexTypeDefinition-Switch">
+  	<xs:annotation><xs:documentation>The Switch element defines a set of TransitionDestination elements that are to be evaluated in the order they are encountered</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:SwitchElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="sdm:TransitionDestination" minOccurs="0" maxOccurs="unbounded">
+      	<xs:annotation><xs:documentation>Single target activity and condition for the transition</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:TransitionDefault" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Default transition</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:group ref="sdm:SwitchElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="sdm:SwitchAttributeExtension"/>
+  </xs:complexType>
+
+  <xs:element name="TransitionDestination" type="sdm:SDMcomplexTypeDefinition-TransitionDestination" />
+  <xs:complexType name="SDMcomplexTypeDefinition-TransitionDestination">
+  	<xs:annotation><xs:documentation>The TransitionDestination element references a single target activity and a condition.
+  	When a TransitionDestination element is encountered, and its referenced condition evaluates to true, then the destination is to be followed</xs:documentation></xs:annotation>
+  	<xs:sequence>
+  		<xs:group ref="sdm:TransitionDestinationElementPreExtension" minOccurs="0" maxOccurs="1"/>
+  		<xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+  			<xs:annotation><xs:documentation>Description of the transition destination</xs:documentation></xs:annotation>
+  		</xs:element>
+    	<xs:group ref="sdm:TransitionDestinationElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="OID" type="odm:oid" use="required">
+    	<xs:annotation><xs:documentation>Unique identifier for the TransitionDestination</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Name" type="odm:name" use="required">
+    	<xs:annotation><xs:documentation>Short name or description</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="TargetActivityOID" type="odm:oidref" use="required">
+    	<xs:annotation><xs:documentation>Reference to the activity which is the target activity of the transition</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ConditionOID" type="odm:oidref" use="required">
+    	<xs:annotation><xs:documentation>Reference to the condition under which the destination is to be followed</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="OrderNumber" type="odm:integer" use="optional">
+    	<xs:annotation><xs:documentation>Optional order number indicating the order in which the conditions for the transitions must be evaluated.
+    	Each TransitionDestination element within its parent Switch element must have an OrderNumber attribute with a unique value, 
+    	or none of the TransitionDestination elements within the parent Switch element must have an OrderNumber attribute.
+    	It is an error if one TransitionDestination within a Switch element has an OrderNumber attribute, whereas one or more others don't. </xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="sdm:TransitionDestinationAttributeExtension"/>
+  </xs:complexType>
+
+  <xs:element name="TransitionDefault" type="sdm:SDMcomplexTypeDefinition-TransitionDefault" />
+  <xs:annotation><xs:documentation>The TransitionDefault element references a target activity to which a transition must take place when that TransitionDefault is reached during Switch evaluation. 
+  		A TransitionDefault may be processed as if it were a TransitionDestination whose condition always evaluates to 'true'</xs:documentation></xs:annotation>
+  <xs:complexType name="SDMcomplexTypeDefinition-TransitionDefault">
+  	<xs:sequence>
+  		<xs:group ref="sdm:TransitionDefaultElementPreExtension" minOccurs="0" maxOccurs="1"/>
+  		<xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+  			<xs:annotation><xs:documentation>Description of the default transition</xs:documentation></xs:annotation>
+  		</xs:element>
+  		<xs:group ref="sdm:TransitionDefaultElementPostExtension" minOccurs="0" maxOccurs="1"/>
+  	</xs:sequence>
+    <xs:attribute name="OID" type="odm:oid" use="required">
+    	<xs:annotation><xs:documentation>Unique identifier for the default transition</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Name" type="odm:name" use="required">
+    	<xs:annotation><xs:documentation>Short name or description</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="TargetActivityOID" type="odm:oidref" use="required">
+    	<xs:annotation><xs:documentation>OID of the activity to which the default transition leads</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="sdm:TransitionDefaultAttributeExtension"/>
+  </xs:complexType>
+  
+  <!--  Trigger:
+        Used for triggers for unplanned/adverse events tied to a scope that may be other than activity.
+   -->
+  <xs:element name="Trigger" type="sdm:SDMcomplexTypeDefinition-Trigger" />
+  <xs:complexType name="SDMcomplexTypeDefinition-Trigger">
+  	<xs:annotation><xs:documentation>The Trigger element describes a divergence to a new path which can be started at any point during a study participant&apos;s path within the referenced structural element.</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:TriggerElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Description of the trigger</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:Switch" minOccurs="1" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Set of transition destinations for the trigger</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:group ref="sdm:TriggerElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="OID" type="odm:oid" use="required">
+    	<xs:annotation><xs:documentation>Unique identifier for the trigger</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Name" type="odm:name" use="required">
+    	<xs:annotation><xs:documentation>Short name or description</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ConditionOID" type="odm:oidref">
+    	<xs:annotation><xs:documentation>Reference to the condition that activates the trigger</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="StructuralElementType" type="sdm:structuralelementtype" use="required">
+    	<xs:annotation><xs:documentation>The structural element type on which the trigger applies</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="StructuralElementOID" type="odm:oidref" use="required">
+    	<xs:annotation><xs:documentation>The OID of the structural element on which the trigger applies.
+    	The referenced structural element must be of the type given by the StructuralElementType attribute</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="sdm:TriggerAttributeExtension"/>
+  </xs:complexType>
+  
+  
+  <xs:element name="StudyStart" type="sdm:SDMcomplexTypeDefinition-StudyStart"/>
+  <xs:complexType name="SDMcomplexTypeDefinition-StudyStart">
+  	<xs:annotation><xs:documentation>The StudyStart references an activity that is the entry point into the study</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:StudyStartElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Description of the study start activity</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:ActivityRef" minOccurs="1" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Reference to an activity acts as the start finish activity</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:group ref="sdm:StudyStartElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="sdm:StudyStartAttributeExtension"/>
+  </xs:complexType>
+  
+  <xs:element name="StudyFinish" type="sdm:SDMcomplexTypeDefinition-StudyFinish"/>
+  <xs:complexType name="SDMcomplexTypeDefinition-StudyFinish">
+  	<xs:annotation><xs:documentation>The StudyFinish element references an activity that is the exit point out of the study</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:StudyFinishElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Description of the study finish activity</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:ActivityRef" minOccurs="1" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Reference to an activity that acts as the study finish activity</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:group ref="sdm:StudyFinishElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="sdm:StudyFinishAttributeExtension"/>
+  </xs:complexType>
+  
+  <xs:element name="PathCanFinish" type="sdm:SDMcomplexTypeDefinition-PathCanFinish"/>
+  <xs:complexType name="SDMcomplexTypeDefinition-PathCanFinish">
+  	<xs:annotation><xs:documentation>The PathCanFinish element allows to specify activities for which it is not necessarily an error that the workflow does not provide a transition from that activity to another activity</xs:documentation></xs:annotation>
+    <xs:sequence>
+      <xs:group ref="sdm:PathCanFinishElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      <xs:element ref="odm:Description" minOccurs="0" maxOccurs="1">
+      	<xs:annotation><xs:documentation>Description of the activities for which the lack of outgoing transitions from those activities is an intentional part of the design rather than an error of omission</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="sdm:ActivityRef" minOccurs="0" maxOccurs="unbounded">
+      	<xs:annotation><xs:documentation>Reference to an activity that is allowed to be an end-of-path activity</xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:group ref="sdm:PathCanFinishElementPostExtension" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="sdm:PathCanFinishAttributeExtension"/>
+  </xs:complexType>
+  
+   <!--  
+     +===========================================================================+
+     | Simple Types/Enumerations                                                 |
+     +===========================================================================+
+   -->
+   <xs:simpleType name="structuralelementtype">
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="Activity" />
+       <xs:enumeration value="Segment" />
+       <xs:enumeration value="StudyEvent" />
+       <xs:enumeration value="Cell" />
+       <xs:enumeration value="Epoch" />
+       <xs:enumeration value="Study" />
+     </xs:restriction>
+   </xs:simpleType>
+
+   <!--  
+     +===========================================================================+
+     | these are purposely empty attributeGroups to permit vendor extensions to  |
+     | the corresponding elements via the standard XML-Schema redefine mechanism |
+     +===========================================================================+
+   -->
+   <xs:attributeGroup name="WorkflowAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="EntryExitCriteriaAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="EntryCriteriaAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="ExitCriteriaAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="IncludeInclusionExclusionCriteriaAttributeExtension"></xs:attributeGroup>
+   
+   
+   <xs:attributeGroup name="TransitionAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="SwitchAttributeExtension"></xs:attributeGroup>   
+   <xs:attributeGroup name="TransitionDestinationAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="TransitionDefaultAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="TriggerAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="StudyStartAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="StudyFinishAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="PathCanFinishAttributeExtension"></xs:attributeGroup>
+                     
+   <!--  
+     +===========================================================================+
+     | these are purposely empty modelGroups to permit vendor extensions to the  |
+     | corresponding elements via the standard XML-Schema redefine mechanism     |
+     +===========================================================================+
+   -->
+   <xs:group name="WorkflowElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="WorkflowElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="EntryExitCriteriaElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="EntryExitCriteriaElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="EntryCriteriaElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="EntryCriteriaElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="ExitCriteriaElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="ExitCriteriaElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="TransitionElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="TransitionElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="SwitchElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="SwitchElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="TransitionDestinationElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="TransitionDestinationElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="TransitionDefaultElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="TransitionDefaultElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="TriggerElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="TriggerElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="StudyStartElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="StudyStartElementPostExtension"><xs:sequence/></xs:group> 
+   <xs:group name="StudyFinishElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="StudyFinishElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="PathCanFinishElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="PathCanFinishElementPostExtension"><xs:sequence/></xs:group>                         
+   
+</xs:schema>

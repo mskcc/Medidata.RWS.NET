@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.cdisc.org/ns/studydesign/v1.0" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:odm="http://www.cdisc.org/ns/odm/v1.3" 
+           xmlns:sdm="http://www.cdisc.org/ns/studydesign/v1.0" 
+           elementFormDefault="qualified" 
+           attributeFormDefault="unqualified">
+
+	<xs:annotation>
+		<xs:documentation>Timing definitions</xs:documentation>
+	</xs:annotation>
+	
+   <xs:import namespace="http://www.cdisc.org/ns/odm/v1.3" schemaLocation="ODM1-3-1.xsd"/>
+   <xs:include schemaLocation="sdm-ns-structure.xsd" />
+   <xs:include schemaLocation="sdm-ns-common.xsd" />
+  
+   <!--  
+     +===========================================================================+
+     | Element: Timing                                                           |
+     +===========================================================================+
+   --> 
+   <xs:element name="Timing" type="sdm:SDMcomplexTypeDefinition-Timing"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-Timing">
+      <xs:annotation><xs:documentation>All timing constructs are grouped beneath the Timing element.</xs:documentation></xs:annotation>
+      <xs:sequence>
+        <xs:group ref="sdm:TimingElementPreExtension" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="sdm:AbsoluteTimingConstraint" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation><xs:documentation>Zero or more absolute timing constraints may be defined.</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element ref="sdm:RelativeTimingConstraint" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation><xs:documentation>Zero or more relative timing constraints may be defined.</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element ref="sdm:TransitionTimingConstraint" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation><xs:documentation>Zero or more transition timing constraints may be defined.</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element ref="sdm:ActivityDuration" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation><xs:documentation>Zero or more activity durations may be defined.</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:group ref="sdm:TimingElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="sdm:TimingAttributeExtension"/>
+   </xs:complexType>           
+
+   <!--  
+     +===========================================================================+
+     | Element: AbsoluteTimingConstraint                                         |
+     +===========================================================================+
+   --> 
+   <xs:element name="AbsoluteTimingConstraint" type="sdm:SDMcomplexTypeDefinition-AbsoluteTimingConstraint"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-AbsoluteTimingConstraint">
+      <xs:annotation><xs:documentation>Each absolute timing constraint limits when an activity can take place during a given time interval, or to specifies an exact date and time as the ideal timing for an activity.</xs:documentation></xs:annotation>
+      <xs:sequence>
+      	<xs:group ref="sdm:AbsoluteTimingConstraintElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      	<xs:element ref="odm:Description" minOccurs="0" maxOccurs="1"/>
+      	<xs:group ref="sdm:AbsoluteTimingConstraintElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="OID" type="odm:oid" use="required">
+      	<xs:annotation><xs:documentation>Unique identifier for the timing constraint.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Name" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>The name of the timing constraint.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attribute name="ActivityOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>The Activity identifier that this timing constraint refers to.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attribute name="TimepointTarget" type="odm:incompleteDatetime" use="required">
+      	<xs:annotation><xs:documentation>The point in time at which the activity ideally should start.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointGranularity" type="sdm:timepointgranularitytype" use="optional">
+      	<xs:annotation><xs:documentation>The granularity that should be applied to the window once the target time has had the pre and post windows applied.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointPreWindow" type="sdm:timepointWindow" use="optional">
+      	<xs:annotation><xs:documentation>Specifies a window (duration) prior to the target time when it is allowed for the activity to start.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointPostWindow" type="sdm:timepointWindow" use="optional">
+      	<xs:annotation><xs:documentation>Specifies a window (duration) after the target time when it is allowed for the activity to start.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attributeGroup ref="sdm:AbsoluteTimingConstraintAttributeExtension"/>
+   </xs:complexType>
+
+
+   <!--  
+     +===========================================================================+
+     | Element: RelativeTimingConstraint                                         |
+     +===========================================================================+
+   -->   
+   <xs:element name="RelativeTimingConstraint" type="sdm:SDMcomplexTypeDefinition-RelativeTimingConstraint"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-RelativeTimingConstraint">
+      <xs:annotation><xs:documentation>A relative timing constraint allows for the scheduling of an activity to be relative to another activity anywhere in the study design.</xs:documentation></xs:annotation>
+      <xs:sequence>
+      	<xs:group ref="sdm:RelativeTimingConstraintElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      	<xs:element ref="odm:Description" minOccurs="0" maxOccurs="1"/>
+      	<xs:group ref="sdm:RelativeTimingConstraintElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="OID" type="odm:oid" use="required">
+      	<xs:annotation><xs:documentation>Unique identifier for the timing constraint.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attribute name="Name" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>The name of the timing constraint.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attribute name="PredecessorActivityOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>Identifies the predecessor activity that forms the basis for the relative timing.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SuccessorActivityOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>Identifies the successor activity that should be scheduled relative to the predecessor.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Type" type="sdm:timingrelationshiptype" default="FinishToStart" use="optional">
+      	<xs:annotation><xs:documentation>Identifies which ends of the activities the timing should be applied to.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointRelativeTarget" type="odm:durationDatetime" use="required">
+      	<xs:annotation><xs:documentation>The ideal time duration between the activities, given the relationship type.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointGranularity" type="sdm:timepointgranularitytype" use="optional">
+      	<xs:annotation><xs:documentation>The granularity that should be applied to the window once the target time has had the pre and post windows applied.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointPreWindow" type="sdm:timepointWindow" use="optional">
+      	<xs:annotation><xs:documentation>Specifies a window (duration) prior to the target time when it is allowed for the activity to start.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointPostWindow" type="sdm:timepointWindow" use="optional">
+      	<xs:annotation><xs:documentation>Specifies a window (duration) after the target time when it is allowed for the activity to start.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SubsequentSchedulingBasis" type="sdm:subsequentschedulingbasistype" default="Planned" use="optional">
+      	<xs:annotation><xs:documentation>Signifies to an execution engine whether the successor activity should occur based on the planned time of the predecessor or the actual time of the predecessor.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attributeGroup ref="sdm:RelativeTimingConstraintAttributeExtension"/>
+   </xs:complexType>
+    
+    
+   <!--  
+     +===========================================================================+
+     | Element: TransitionTimingConstraint                                       |
+     +===========================================================================+
+   -->
+   <xs:element name="TransitionTimingConstraint" type="sdm:SDMcomplexTypeDefinition-TransitionTimingConstraint"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-TransitionTimingConstraint">
+      <xs:annotation><xs:documentation>Allows for a timing constraint to be added to a workflow transition.</xs:documentation></xs:annotation>
+      <xs:sequence>
+        <xs:group ref="sdm:TransitionTimingConstraintElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      	<xs:element ref="odm:Description" minOccurs="0" maxOccurs="1"/>
+      	<xs:group ref="sdm:TransitionTimingConstraintElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="OID" type="odm:oid" use="required">
+      	<xs:annotation><xs:documentation>Unique identifier for the timing constraint.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attribute name="Name" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>The name of the timing constraint.</xs:documentation></xs:annotation>
+      </xs:attribute>            
+      <!-- TransitionDestinationOID may refer either to a TransitionDestination or a TransitionDefault -->
+      <xs:attribute name="TransitionDestinationOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>Identifies the transition destination element (in the workflow section) that this applies to.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attribute name="Type" type="sdm:timingrelationshiptype" default="FinishToStart" use="optional">
+      	<xs:annotation><xs:documentation>Identifies which ends of the activities the timing should be applied to.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointRelativeTarget" type="odm:durationDatetime" use="required">
+      	<xs:annotation><xs:documentation>The ideal time duration between the activities, given the relationship type.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointGranularity" type="sdm:timepointgranularitytype" use="optional">
+      	<xs:annotation><xs:documentation>The granularity that should be applied to the window once the target time has had the pre and post windows applied.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointPreWindow" type="sdm:timepointWindow" use="optional">
+      	<xs:annotation><xs:documentation>Specifies a window (duration) prior to the target time when it is allowed for the activity to start.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="TimepointPostWindow" type="sdm:timepointWindow" use="optional">
+      	<xs:annotation><xs:documentation>Specifies a window (duration) after the target time when it is allowed for the activity to start.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="SubsequentSchedulingBasis" type="sdm:subsequentschedulingbasistype" default="Planned" use="optional">
+      	<xs:annotation><xs:documentation>Signifies to an execution engine whether the successor activity should occur based on the planned time of the predecessor or the actual time of the predecessor.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attributeGroup ref="sdm:TransitionTimingConstraintAttributeExtension"/>
+   </xs:complexType>             
+
+
+   <!--  
+     +===========================================================================+
+     | Element: ActivityDuration                                                 |
+     +===========================================================================+
+   -->
+   <xs:element name="ActivityDuration" type="sdm:SDMcomplexTypeDefinition-ActivityDuration"/>      
+   <xs:complexType name="SDMcomplexTypeDefinition-ActivityDuration">
+      <xs:annotation><xs:documentation>Defines the normal length of time that an activity would take, also allowing the specification of plus/minus windows.</xs:documentation></xs:annotation>
+      <xs:sequence>
+        <xs:group ref="sdm:ActivityDurationElementPreExtension" minOccurs="0" maxOccurs="1"/>
+      	<xs:element ref="odm:Description" minOccurs="0" maxOccurs="1"/>
+      	<xs:group ref="sdm:ActivityDurationElementPostExtension" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="OID" type="odm:oid" use="required">
+      	<xs:annotation><xs:documentation>Unique identifier for the activity duration.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attribute name="Name" type="odm:name" use="required">
+      	<xs:annotation><xs:documentation>The name of the activity duration.</xs:documentation></xs:annotation>
+      </xs:attribute>      
+      <xs:attribute name="ActivityOID" type="odm:oidref" use="required">
+      	<xs:annotation><xs:documentation>The activity to which this duration information relates.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="PlannedDuration" type="odm:durationDatetime" use="required">
+      	<xs:annotation><xs:documentation>The length of time that the activity would normally take.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="PlannedDurationPreWindow" type="sdm:timepointWindow" use="optional">
+      	<xs:annotation><xs:documentation>A duration that would be applied to the planned duration to calculate the pre-window.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="PlannedDurationPostWindow" type="sdm:timepointWindow" use="optional">
+      	<xs:annotation><xs:documentation>A duration that would be applied to the planned duration to calculate the post-window.</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attributeGroup ref="sdm:ActivityDurationAttributeExtension"/>
+   </xs:complexType>   
+
+             
+   <!--  
+     +===========================================================================+
+     | Simple Types/Enumerations                                                 |
+     +===========================================================================+
+   -->
+   <xs:simpleType name="timingrelationshiptype">
+     <xs:annotation>
+       <xs:documentation>
+       For relative timing constraints, defines the types of relationships that may exist.
+       </xs:documentation>
+     </xs:annotation>
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="StartToStart" />
+       <xs:enumeration value="StartToFinish" />
+       <xs:enumeration value="FinishToStart" />
+       <xs:enumeration value="FinishToFinish" />
+     </xs:restriction>
+   </xs:simpleType>         
+
+   <xs:simpleType name="timepointgranularitytype">
+     <xs:annotation>
+       <xs:documentation>
+       Defines how a target time (or window endpoint) should be expanded.  For example, "PD" means any time that day whereas "PTH" means anytime that hour.
+       </xs:documentation>
+     </xs:annotation>
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="PY" />
+       <xs:enumeration value="PM" />
+       <xs:enumeration value="PD" />
+       <xs:enumeration value="PTH" />
+       <xs:enumeration value="PTM" />
+       <xs:enumeration value="PTS" />
+     </xs:restriction>
+   </xs:simpleType>  
+
+   <xs:simpleType name="subsequentschedulingbasistype">
+     <xs:annotation>
+       <xs:documentation>
+       Indicates to an execution engine how the subsequent activities' timing should be applied.
+       </xs:documentation>
+     </xs:annotation>
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="Planned" />
+       <xs:enumeration value="Actual" />
+     </xs:restriction>
+   </xs:simpleType>  
+
+   <xs:simpleType name="timepointWindow">
+     <xs:restriction base="odm:durationDatetime">
+       <xs:pattern value="[^\-].+"/>
+     </xs:restriction>
+    </xs:simpleType>         
+         
+   <!--  
+     +===========================================================================+
+     | these are purposely empty attributeGroups to permit vendor extensions to  |
+     | the corresponding elements via the standard XML-Schema redefine mechanism |
+     +===========================================================================+
+   -->
+   <xs:attributeGroup name="TimingAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="AbsoluteTimingConstraintAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="RelativeTimingConstraintAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="TransitionTimingConstraintAttributeExtension"></xs:attributeGroup>
+   <xs:attributeGroup name="ActivityDurationAttributeExtension"></xs:attributeGroup>
+      
+   <!--  
+     +===========================================================================+
+     | these are purposely empty modelGroups to permit vendor extensions to the  |
+     | corresponding elements via the standard XML-Schema redefine mechanism     |
+     +===========================================================================+
+   -->
+   <xs:group name="TimingElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="TimingElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="AbsoluteTimingConstraintElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="AbsoluteTimingConstraintElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="RelativeTimingConstraintElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="RelativeTimingConstraintElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="TransitionTimingConstraintElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="TransitionTimingConstraintElementPostExtension"><xs:sequence/></xs:group>
+   <xs:group name="ActivityDurationElementPreExtension"><xs:sequence/></xs:group>
+   <xs:group name="ActivityDurationElementPostExtension"><xs:sequence/></xs:group>
+        
+</xs:schema>
