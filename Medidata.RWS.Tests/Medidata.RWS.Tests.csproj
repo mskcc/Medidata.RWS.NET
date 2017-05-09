@@ -99,6 +99,7 @@
     <Compile Include="RWSHelpersTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".env" />
     <None Include=".env.example" />
     <None Include="packages.config" />
   </ItemGroup>
