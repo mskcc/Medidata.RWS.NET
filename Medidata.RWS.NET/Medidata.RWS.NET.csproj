@@ -138,6 +138,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="docs\getting_started.rst" />
+    <None Include="docs\introduction.rst" />
+    <None Include="docs\index.rst" />
     <None Include="ODM Schema\mdsol-extension.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -188,8 +191,9 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="docs\" />
+    <Content Include="docs\conf.py" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

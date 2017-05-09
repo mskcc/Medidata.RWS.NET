@@ -3,13 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Medidata.RWS.NET's documentation!
 ============================================
+Medidata.RWS.NET Documentation
+============================================
+
+Medidata.RWS.NET is a comprehensive, fluent .NET API library for `Medidata RAVE Web Services (RWS) <https://learn.mdsol.com/api/rws/getting-started-with-rave-web-services-95587258.html>`_. It handles a large portion of the boilerplate C# code you'd normally have to write in order to communicate with RWS, allowing you to get up and running faster.
+
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
+   introduction
+   getting_started
 
 
 Indices and tables
