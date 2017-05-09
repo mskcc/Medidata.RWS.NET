@@ -265,3 +265,4 @@ __pycache__/
 */docs/_templates
 */docs/make.bat
 */docs/Makefile
+*.env
