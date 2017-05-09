@@ -138,6 +138,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="docs\topics.rst" />
     <None Include="docs\getting_started.rst" />
     <None Include="docs\introduction.rst" />
     <None Include="docs\index.rst" />
