@@ -188,7 +188,7 @@ namespace Medidata.RWS.Extras.AuditEvent
         /// Get the next "startid", which is based on a "Link" response header.
         /// </summary>
         /// <returns></returns>
-        private int? GetNextStartId()
+        public int? GetNextStartId()
         {
 
             if (Connection.GetLastResult() == null) return null;
