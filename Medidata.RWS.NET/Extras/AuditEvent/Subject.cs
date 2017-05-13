@@ -21,13 +21,22 @@ namespace Medidata.RWS.Extras.AuditEvent
         /// <param name="Name">The name.</param>
         /// <param name="Status">The status.</param>
         /// <param name="TransactionType">Type of the transaction.</param>
-        public Subject(string Key, string Name, string Status, string TransactionType)
+        public Subject(string Key, string Name, string Status, string TransactionType, string SubjectKeyType)
         {
             this.Key = Key;
             this.Name = Name;
             this.Status = Status;
             this.TransactionType = TransactionType;
+            this.SubjectKeyType = SubjectKeyType;
         }
+
+        /// <summary>
+        /// Gets the type of the subject key.
+        /// </summary>
+        /// <value>
+        /// The type of the subject key.
+        /// </value>
+        public string SubjectKeyType { get; private set; }
 
         /// <summary>
         /// Gets the key.

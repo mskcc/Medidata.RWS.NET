@@ -92,6 +92,7 @@
     <Compile Include="Core\Responses\RWSResponseTests.cs" />
     <Compile Include="Core\Responses\RWSXMLResponsesTests.cs" />
     <Compile Include="Env.cs" />
+    <Compile Include="Extras\AuditEvent\AuditEventParserTests.cs" />
     <Compile Include="Extras\AuditEvent\ODMAdapterTests.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="ODMTests.cs" />

@@ -43,6 +43,7 @@ namespace Medidata.RWS.Extras.AuditEvent
         // Attributes
         // ===========
         private readonly XName A_AUDIT_SUBCATEGORY_NAME = Mdsol("AuditSubCategoryName");
+        private readonly XName A_mdsol_SUBJECT_KEY_TYPE = Mdsol("SubjectKeyType");
         private readonly XName A_METADATA_VERSION_OID = "MetaDataVersionOID";
         private readonly XName A_STUDY_OID = "StudyOID";
         private readonly XName A_TRANSACTION_TYPE = "TransactionType";
@@ -185,7 +186,8 @@ namespace Medidata.RWS.Extras.AuditEvent
                         GetAttributeValueFrom(subjectData, A_SUBJECT_KEY),
                         GetAttributeValueFrom(subjectData, A_SUBJECT_NAME),
                         GetAttributeValueFrom(subjectData, A_SUBJECT_STATUS),
-                        GetAttributeValueFrom(subjectData, A_TRANSACTION_TYPE)
+                        GetAttributeValueFrom(subjectData, A_TRANSACTION_TYPE),
+                        GetAttributeValueFrom(subjectData, A_mdsol_SUBJECT_KEY_TYPE)
                     );
                 }
 
