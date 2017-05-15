@@ -267,3 +267,4 @@ __pycache__/
 */docs/Makefile
 *.env
 *.nuspec
+*.snk
