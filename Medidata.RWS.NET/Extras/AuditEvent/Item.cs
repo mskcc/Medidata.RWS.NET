@@ -21,7 +21,8 @@ namespace Medidata.RWS.Extras.AuditEvent
         /// <param name="Verify">if set to <c>true</c> [verify].</param>
         /// <param name="Lock">if set to <c>true</c> [lock].</param>
         /// <param name="TransactionType">Type of the transaction.</param>
-        public Item(string OID, string Value, bool Freeze, bool Verify, bool Lock, string TransactionType)
+        /// <param name="measurementUnitOid"></param>
+        public Item(string OID, string Value, bool Freeze, bool Verify, bool Lock, string TransactionType, string measurementUnitOid)
         {
             this.OID = OID;
             this.Value = Value;
@@ -29,8 +30,17 @@ namespace Medidata.RWS.Extras.AuditEvent
             this.Verify = Verify;
             this.Lock = Lock;
             this.TransactionType = TransactionType;
+            MeasurementUnitRef = new MeasurementUnitRef(measurementUnitOid);
         }
 
+
+        /// <summary>
+        /// Gets the measurement unit reference.
+        /// </summary>
+        /// <value>
+        /// The measurement unit reference.
+        /// </value>
+        public MeasurementUnitRef MeasurementUnitRef { get; private set; }
         /// <summary>
         /// Gets a value indicating whether this <see cref="Item"/> is freeze.
         /// </summary>

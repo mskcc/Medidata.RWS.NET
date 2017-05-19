@@ -23,6 +23,7 @@ namespace Medidata.RWS.Extras.AuditEvent
         // ===========
         private readonly XName E_CLINICAL_DATA = Odm("ClinicalData");
         private readonly XName E_SUBJECT_DATA = Odm("SubjectData");
+        private readonly XName E_SITEREF_DATA = Odm("SiteRef");
         private readonly XName E_STUDYEVENT_DATA = Odm("StudyEventData");
         private readonly XName E_USER_REF = Odm("UserRef");
         private readonly XName E_SOURCE_ID = Odm("SourceID");
@@ -32,6 +33,7 @@ namespace Medidata.RWS.Extras.AuditEvent
         private readonly XName E_FORM_DATA = Odm("FormData");
         private readonly XName E_ITEM_GROUP_DATA = Odm("ItemGroupData");
         private readonly XName E_ITEM_DATA = Odm("ItemData");
+        private readonly XName E_MEASUREMENT_UNIT_REF = Odm("MeasurementUnitRef");
         private readonly XName E_QUERY = Mdsol("Query");
         private readonly XName E_PROTOCOL_DEVIATION = Mdsol("ProtocolDeviation");
         private readonly XName E_REVIEW = Mdsol("Review");
@@ -52,6 +54,7 @@ namespace Medidata.RWS.Extras.AuditEvent
         private readonly XName A_USER_OID = "UserOID";
         private readonly XName A_LOCATION_OID = "LocationOID";
         private readonly XName A_ITEM_OID = "ItemOID";
+        private readonly XName A_MEASUREMENT_UNIT_OID = "MeasurementUnitOID";
         private readonly XName A_VALUE = "Value";
         private readonly XName A_STUDYEVENT_OID = "StudyEventOID";
         private readonly XName A_STUDYEVENT_REPEAT_KEY = "StudyEventRepeatKey";
@@ -180,6 +183,9 @@ namespace Medidata.RWS.Extras.AuditEvent
                 //Subject Data
                 var subjectData = GetElementsFrom(cData, E_SUBJECT_DATA);    
 
+                //SiteRef Data
+                var siteRef = GetElementsFrom(cData, E_SITEREF_DATA);
+
                 if(subjectData != null)
                 {
                     Context.Subject = new Subject(
@@ -187,7 +193,8 @@ namespace Medidata.RWS.Extras.AuditEvent
                         GetAttributeValueFrom(subjectData, A_SUBJECT_NAME),
                         GetAttributeValueFrom(subjectData, A_SUBJECT_STATUS),
                         GetAttributeValueFrom(subjectData, A_TRANSACTION_TYPE),
-                        GetAttributeValueFrom(subjectData, A_mdsol_SUBJECT_KEY_TYPE)
+                        GetAttributeValueFrom(subjectData, A_mdsol_SUBJECT_KEY_TYPE),
+                        GetAttributeValueFrom(siteRef, A_LOCATION_OID)
                     );
                 }
 
@@ -248,12 +255,11 @@ namespace Medidata.RWS.Extras.AuditEvent
                 if (formData != null)
                 {
                     Context.Form = new Form(
-                       formData.Attribute(A_FORM_OID) == null ? "" : formData.Attribute(A_FORM_OID).Value,
-                       formData.Attribute(A_FORM_REPEAT_KEY) == null ? 0 : TryInt(formData.Attribute(A_FORM_REPEAT_KEY).Value),
-                       formData.Attribute(A_TRANSACTION_TYPE) == null ? "" : formData.Attribute(A_TRANSACTION_TYPE).Value,
-                       formData.Attribute(A_DATAPAGE_NAME) == null ? "" : formData.Attribute(A_DATAPAGE_NAME).Value,
-                       formData.Attribute(A_DATAPAGE_ID) == null ? -1 : TryInt(formData.Attribute(A_DATAPAGE_ID).Value)
-                      
+                       GetAttributeValueFrom(formData, A_FORM_OID),
+                       TryInt(GetAttributeValueFrom(formData, A_FORM_REPEAT_KEY)),
+                       GetAttributeValueFrom(formData, A_TRANSACTION_TYPE),
+                       GetAttributeValueFrom(formData, A_DATAPAGE_NAME),
+                       TryInt(GetAttributeValueFrom(formData, A_DATAPAGE_ID))
                    );
                 }
 
@@ -263,10 +269,10 @@ namespace Medidata.RWS.Extras.AuditEvent
                 if (itemGroupData != null)
                 {
                     Context.ItemGroup = new ItemGroup(
-                       itemGroupData.Attribute(A_ITEMGROUP_OID) == null ? "" : itemGroupData.Attribute(A_ITEMGROUP_OID).Value,
-                       itemGroupData.Attribute(A_ITEMGROUP_REPEAT_KEY) == null ? 0 : TryInt(itemGroupData.Attribute(A_ITEMGROUP_REPEAT_KEY).Value),
-                       itemGroupData.Attribute(A_TRANSACTION_TYPE) == null ? "" : itemGroupData.Attribute(A_TRANSACTION_TYPE).Value,
-                       itemGroupData.Attribute(A_RECORD_ID) == null ? -1 : TryInt(itemGroupData.Attribute(A_RECORD_ID).Value)
+                       GetAttributeValueFrom(itemGroupData, A_ITEMGROUP_OID),
+                       TryInt(GetAttributeValueFrom(itemGroupData, A_ITEMGROUP_REPEAT_KEY)),
+                       GetAttributeValueFrom(itemGroupData, A_TRANSACTION_TYPE),
+                       TryInt(GetAttributeValueFrom(itemGroupData, A_RECORD_ID))
                    );
                 }
 
@@ -275,14 +281,22 @@ namespace Medidata.RWS.Extras.AuditEvent
 
                 if (itemData != null)
                 {
+                    //MeasurementUnitRef
+                    var measurementUnitData =
+                        itemData.Descendants().FirstOrDefault(x => x.Name == E_MEASUREMENT_UNIT_REF);
+
+                    var mmtUnitOid = measurementUnitData != null ? GetAttributeValueFrom(measurementUnitData, A_MEASUREMENT_UNIT_OID) : "";
+
                     Context.Item = new Item(
-                       itemData.Attribute(A_ITEM_OID) == null ? "" : itemData.Attribute(A_ITEM_OID).Value,
-                       itemData.Attribute(A_VALUE) == null ? "" : itemData.Attribute(A_VALUE).Value,
+                       GetAttributeValueFrom(itemData, A_ITEM_OID),
+                       GetAttributeValueFrom(itemData, A_VALUE),
                        TrueOrFalse(itemData.Attribute(A_FREEZE)),
                        TrueOrFalse(itemData.Attribute(A_VERIFY)),
                        TrueOrFalse(itemData.Attribute(A_LOCK)),
-                       itemData.Attribute(A_TRANSACTION_TYPE) == null ? "" : itemData.Attribute(A_TRANSACTION_TYPE).Value
+                       GetAttributeValueFrom(itemData, A_TRANSACTION_TYPE),
+                       mmtUnitOid
                    );
+
                 }
 
                 // Query Data

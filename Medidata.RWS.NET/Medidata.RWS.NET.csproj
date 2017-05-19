@@ -116,6 +116,7 @@
     <Compile Include="Extras\AuditEvent\ISubscriber.cs" />
     <Compile Include="Extras\AuditEvent\Item.cs" />
     <Compile Include="Extras\AuditEvent\ItemGroup.cs" />
+    <Compile Include="Extras\AuditEvent\MeasurementUnitRef.cs" />
     <Compile Include="Extras\AuditEvent\ODMAdapter.cs" />
     <Compile Include="Extras\AuditEvent\PageProcessedEventHandler.cs" />
     <Compile Include="Extras\AuditEvent\ParsingCompleteEventHandler.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Extras\AuditEvent\Query.cs" />
     <Compile Include="Extras\AuditEvent\Review.cs" />
     <Compile Include="Extras\AuditEvent\Signature.cs" />
+    <Compile Include="Extras\AuditEvent\SiteRef.cs" />
     <Compile Include="Extras\AuditEvent\StudyEvent.cs" />
     <Compile Include="Extras\AuditEvent\Subject.cs" />
     <Compile Include="Extras\ClinicalViewMetadataParser.cs" />

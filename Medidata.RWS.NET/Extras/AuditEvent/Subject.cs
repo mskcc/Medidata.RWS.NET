@@ -13,15 +13,27 @@ namespace Medidata.RWS.Extras.AuditEvent
     public class Subject : ContextBase
     {
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Subject"/> class.
+        /// </summary>
+        public Subject(string locationOID)
+        {
+            SiteRef = new SiteRef
+            {
+                LocationOID = locationOID
+            };
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Subject" /> class.
         /// </summary>
         /// <param name="Key">The key.</param>
         /// <param name="Name">The name.</param>
         /// <param name="Status">The status.</param>
         /// <param name="TransactionType">Type of the transaction.</param>
-        public Subject(string Key, string Name, string Status, string TransactionType, string SubjectKeyType)
+        /// <param name="SubjectKeyType">Type of the subject key.</param>
+        /// <param name="locationOID">The location oid.</param>
+        public Subject(string Key, string Name, string Status, string TransactionType, string SubjectKeyType, string locationOID) : this(locationOID)
         {
             this.Key = Key;
             this.Name = Name;
@@ -29,6 +41,14 @@ namespace Medidata.RWS.Extras.AuditEvent
             this.TransactionType = TransactionType;
             this.SubjectKeyType = SubjectKeyType;
         }
+
+        /// <summary>
+        /// Gets the site reference.
+        /// </summary>
+        /// <value>
+        /// The site reference.
+        /// </value>
+        public SiteRef SiteRef { get; private set; }
 
         /// <summary>
         /// Gets the type of the subject key.
