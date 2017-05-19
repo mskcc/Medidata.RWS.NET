@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Medidata.RWS.Core.Requests;
 using Medidata.RWS.Extras.AuditEvent;
@@ -148,6 +149,41 @@ namespace Medidata.RWS.Tests.Extras.AuditEvent
             Assert.AreEqual(8253891, odmAdapter.LastSourceId);
 
         }
+
+
+
+        [TestMethod]
+        public void ODMAdapter_can_get_link_and_rel_from_response_headers()
+        {
+
+            var mockResponse = new Mock<IRestResponse>();
+
+            mockResponse.Setup(x => x.Content).Returns(AuditRecordXML);
+
+            mockResponse.Setup(x => x.Headers).Returns(new List<Parameter>(){ new Parameter { Name = "Link", Value = "<https://innovate.mdsol.com/RaveWebServices/datasets/ClinicalAuditRecords.odm?studyoid=Mediflex&per_page=10000&startid=8253885>; rel=\"next\"" } });
+
+            var odmAdapterResponse = new Mock<RWSResponse>(mockResponse.Object);
+
+            odmAdapterResponse.Setup(x => x.RawXMLString()).Returns(AuditRecordXML);
+
+            var conn = new Mock<IRWSConnection>();
+
+            var mockParser = new AuditEventParser();
+
+            conn.Setup(m => m.SendRequest(
+                It.IsAny<AuditRecordsRequest>(), null)).Returns(odmAdapterResponse.Object);
+
+            conn.Setup(m => m.GetLastResult()).Returns(mockResponse.Object);
+
+            var odmAdapter = new OdmAdapter(conn.Object, mockParser, "", "");
+
+            odmAdapter.Run(1, 1, 1000); 
+
+            Assert.AreEqual("https://innovate.mdsol.com/RaveWebServices/datasets/ClinicalAuditRecords.odm?studyoid=Mediflex&per_page=10000&startid=8253885", odmAdapter.LastLink);
+            Assert.AreEqual("next", odmAdapter.LastRel);
+
+        }
+
 
         private string AuditRecordXML = @"<ODM ODMVersion=""1.3"" FileType=""Transactional"" FileOID=""7b6914bd-ab20-421c-b6f5-bdfb3e5bf3b1"" CreationDateTime=""2016-10-14T19:07:40"" xmlns=""http://www.cdisc.org/ns/odm/v1.3"" xmlns:mdsol=""http://www.mdsol.com/ns/odm/metadata"">
 	                <ClinicalData StudyOID=""Mediflex(DEV3 LabTest)"" MetaDataVersionOID=""812""  mdsol:AuditSubCategoryName=""SubjectCreated"">

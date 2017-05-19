@@ -80,6 +80,23 @@ namespace Medidata.RWS.Extras.AuditEvent
         /// </value>
         public int LastSourceId { get; private set; }
 
+
+        /// <summary>
+        /// Gets the last link from the header.
+        /// </summary>
+        /// <value>
+        /// The last link from the header.
+        /// </value>
+        public string LastLink { get; private set; }
+
+        /// <summary>
+        /// Gets the last 'Rel' value for the header link.
+        /// </summary>
+        /// <value>
+        /// The last 'Rel' value
+        /// </value>
+        public string LastRel { get; private set; }
+
         /// <summary>
         /// Runs the ODM Adapter, using the specified parameters.
         /// </summary>
@@ -153,7 +170,6 @@ namespace Medidata.RWS.Extras.AuditEvent
 
         }
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="OdmAdapter" /> class.
         /// </summary>
@@ -198,6 +214,9 @@ namespace Medidata.RWS.Extras.AuditEvent
               
 
                 var pageLinks = new PageLinks(Connection.GetLastResult());
+
+                LastLink = pageLinks.LinkPart;
+                LastRel = pageLinks.RelValue;
 
                 var parsedQueryString = HttpUtility.ParseQueryString(pageLinks.GetNext());
 

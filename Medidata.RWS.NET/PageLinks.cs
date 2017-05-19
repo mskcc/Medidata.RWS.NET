@@ -28,6 +28,22 @@ namespace Medidata.RWS
         private string prev;
 
         /// <summary>
+        /// Gets the 'Link' part of the link.
+        /// </summary>
+        /// <value>
+        /// The 'Link' part.
+        /// </value>
+        public string LinkPart { get; }
+
+        /// <summary>
+        /// Gets the 'Rel' value of the link.
+        /// </summary>
+        /// <value>
+        /// The 'Rel' value.
+        /// </value>
+        public string RelValue { get; }
+
+        /// <summary>
         /// Parse links contained in the header of an IRestResponse object.
         /// </summary>
         /// <param name="response"></param>
@@ -50,12 +66,12 @@ namespace Medidata.RWS
                     if (segments.Count < 2)
                         continue;
 
-                    string linkPart = segments.First().Trim();
+                    LinkPart = segments.First().Trim();
 
-                    if (!linkPart.StartsWith("<") || !linkPart.EndsWith(">")) //$NON-NLS-1$ //$NON-NLS-2$
+                    if (!LinkPart.StartsWith("<") || !LinkPart.EndsWith(">")) //$NON-NLS-1$ //$NON-NLS-2$
                         continue;
 
-                    linkPart = linkPart.TrimStart('<').TrimEnd('>');
+                    LinkPart = LinkPart.TrimStart('<').TrimEnd('>');
 
                     foreach (string segment in segments)
                     {
@@ -65,19 +81,19 @@ namespace Medidata.RWS
                         if (rel.Count < 2 || !Constants.META_REL.Equals(rel.First()))
                             continue;
 
-                        string relValue = rel.ElementAt(1);
+                        RelValue = rel.ElementAt(1);
 
-                        if (relValue.StartsWith(@"""") && relValue.EndsWith(@"""")) //$NON-NLS-1$ //$NON-NLS-2$
-                            relValue = relValue.TrimStart('"').TrimEnd('"');
+                        if (RelValue.StartsWith(@"""") && RelValue.EndsWith(@"""")) //$NON-NLS-1$ //$NON-NLS-2$
+                            RelValue = RelValue.TrimStart('"').TrimEnd('"');
 
-                        if (Constants.META_FIRST.Equals(relValue))
-                            first = linkPart;
-                        else if (Constants.META_LAST.Equals(relValue))
-                            last = linkPart;
-                        else if (Constants.META_NEXT.Equals(relValue))
-                            next = linkPart;
-                        else if (Constants.META_PREV.Equals(relValue))
-                            prev = linkPart;
+                        if (Constants.META_FIRST.Equals(RelValue))
+                            first = LinkPart;
+                        else if (Constants.META_LAST.Equals(RelValue))
+                            last = LinkPart;
+                        else if (Constants.META_NEXT.Equals(RelValue))
+                            next = LinkPart;
+                        else if (Constants.META_PREV.Equals(RelValue))
+                            prev = LinkPart;
                     }
 
 
