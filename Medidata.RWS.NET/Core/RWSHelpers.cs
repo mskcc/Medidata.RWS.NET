@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
+using Medidata.RWS.Core.DataBuilders;
 
 namespace Medidata.RWS.Core
 {
@@ -14,6 +17,89 @@ namespace Medidata.RWS.Core
     /// </summary>
     public static class RWSHelpers
     {
+
+
+        /// <summary>
+        /// XML Helper class
+        /// </summary>
+        public static class Xml
+        {
+
+            // filters control characters but allows only properly-formed surrogate sequences
+            private static readonly Regex InvalidXmlChars = new Regex(
+                @"(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F\uFEFF\uFFFE\uFFFF\u200B]",
+                RegexOptions.Compiled);
+
+            /// <summary>
+            /// removes any unusual Unicode characters that can't be encoded into XML
+            /// </summary>
+            public static string RemoveInvalidXmlChars(string text)
+            {
+                return string.IsNullOrEmpty(text) ? "" : InvalidXmlChars.Replace(text, "");
+            }
+
+            /// <summary>
+            /// Parse a string representation of a RWS XML Response.
+            /// </summary>
+            /// <param name="xmlString"></param>
+            /// <returns>XmlElement</returns>
+            public static XmlElement GetXmlElementFromString(string xmlString)
+            {
+                xmlString = RemoveInvalidXmlChars(xmlString);
+
+                var xmlDoc = new XmlDocument();
+
+                if (string.IsNullOrEmpty(xmlString))
+                {
+                    xmlString = new ODMBuilder().AsXMLString();
+                    xmlDoc.LoadXml(xmlString);
+                }
+
+                using (XmlReader reader = XmlReader.Create(new StringReader(xmlString), new XmlReaderSettings { CheckCharacters = false }))
+                {
+                    while (reader.Read())
+                    {
+                        xmlDoc.Load(reader);
+                    }
+                }
+
+                return xmlDoc.DocumentElement;
+            }
+
+
+
+            /// <summary>
+            /// Parse a string representation of a RWS XML Response.
+            /// </summary>
+            /// <param name="xmlString"></param>
+            /// <returns>XmlElement</returns>
+            public static XDocument GetXDocumentFromString(string xmlString)
+            {
+
+                xmlString = RemoveInvalidXmlChars(xmlString);
+
+                XDocument xmlDoc = new XDocument();
+
+                if (string.IsNullOrEmpty(xmlString))
+                {
+                    xmlString = new ODMBuilder().AsXMLString();
+                    xmlDoc = XDocument.Parse(xmlString);
+                }
+
+                using (XmlReader reader = XmlReader.Create(new StringReader(xmlString), new XmlReaderSettings { CheckCharacters = false }))
+                {
+                    while (reader.Read())
+                    {
+                        xmlDoc = XDocument.Load(reader);
+                    }
+                }
+
+                return xmlDoc;
+
+            }
+
+
+        }
 
         /// <summary>
         /// Serialize objects from XML.

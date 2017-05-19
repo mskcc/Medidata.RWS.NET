@@ -55,6 +55,57 @@ namespace Medidata.RWS.Tests.Core.Responses
         }
 
 
+
+        [TestMethod]
+        public void RWSXMLResponse_can_parse_invalid_characters()
+        {
+            //Arrange
+            var testResponse = new TestResponse();
+
+            //Act 
+            testResponse.ParseXMLString(InvalidXMLResponse);
+
+            //Assert
+            //No exceptions means we successfully parsed the string
+
+        }
+
+
+
+        /// <summary>
+        /// Test class for testing abstract RWSXMLResponse.
+        /// </summary>
+        /// <seealso cref="Medidata.RWS.Core.Responses.RWSXMLResponse" />
+        private class TestResponse : RWSXMLResponse
+        {
+        }
+
+        private const string InvalidXMLResponse = @"<?xml version=""1.0"" encoding=""utf-8""?>
+                <ODM FileType=""Snapshot"" FileOID=""69c36236-9c95-4a23-9420-cfe94f831c8d"" CreationDateTime=""2016-11-20T21:33:00.884-00:00"" ODMVersion=""1.3"" xmlns:mdsol=""http://www.mdsol.com/ns/odm/metadata"" xmlns:xlink=""http://www.w3.org/1999/xlink"" xmlns=""http://www.cdisc.org/ns/odm/v1.3"">
+                    <ClinicalData StudyOID=""Mediflex(DEV3 LabTest)"" MetaDataVersionOID=""812"">
+                        <SubjectData SubjectKey=""MJK"">
+                            <SiteRef LocationOID=""101"" />
+                            <StudyEventData StudyEventOID=""LABS"" StudyEventRepeatKey=""LAB[1]/LABS[1]"">
+                                <FormData FormOID=""HEM"" FormRepeatKey=""1"">
+                                    <ItemGroupData ItemGroupOID=""HEM_LOG_LINE"">
+                                        <ItemData ItemOID=""HEM.HEMDATE"" Value=""#x9"" />
+                                        <ItemData ItemOID=""HEM.HEMDATE2"" Value=""#xA"" />
+                                        <ItemData ItemOID=""HEM.HEMDATE3"" Value=""#xD"" />
+                                        <ItemData ItemOID=""HEM.HEMDATE4"" Value=""&#x3;"" />
+                                        <ItemData ItemOID=""HEM.HEMDATE5"" Value=""#x20"" />
+                                        <ItemData ItemOID=""HEM.HEMDATE6"" Value=""#xD7FF"" />
+                                        <ItemData ItemOID=""HEM.HEMDATE7"" Value=""#xE000"" />
+                                        <ItemData ItemOID=""HEM.HEMDATE8"" Value=""#xFFFD"" />
+                                        <ItemData ItemOID=""HEM.HEMDATE8"" Value=""#x10000"" />
+                                        <ItemData ItemOID=""HEM.HEMDATE8"" Value=""#x10FFFF"" />
+                                    </ItemGroupData>
+                                </FormData>
+                            </StudyEventData>
+                        </SubjectData>
+                    </ClinicalData>
+                </ODM>";
+
+
         private const string Response = @"<?xml version=""1.0"" encoding=""utf-8""?>
                 <ODM FileType=""Snapshot"" FileOID=""69c36236-9c95-4a23-9420-cfe94f831c8d"" CreationDateTime=""2016-11-20T21:33:00.884-00:00"" ODMVersion=""1.3"" xmlns:mdsol=""http://www.mdsol.com/ns/odm/metadata"" xmlns:xlink=""http://www.w3.org/1999/xlink"" xmlns=""http://www.cdisc.org/ns/odm/v1.3"">
                     <ClinicalData StudyOID=""Mediflex(DEV3 LabTest)"" MetaDataVersionOID=""812"">

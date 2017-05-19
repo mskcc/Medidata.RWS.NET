@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 using Medidata.RWS.Core.DataBuilders;
@@ -23,8 +24,19 @@ namespace Medidata.RWS.Core.Responses
         public virtual string RawXMLString()
         {
 
-            return xmlString.Trim('\uFEFF', '\u200B');
+            return xmlString;
 
+        }
+
+        /// <summary>
+        /// Gets or sets the x document.
+        /// </summary>
+        /// <value>
+        /// The x document.
+        /// </value>
+        public XDocument GetXDocument()
+        {
+            return RWSHelpers.Xml.GetXDocumentFromString(xmlString); 
         }
 
         /// <summary>
@@ -47,7 +59,7 @@ namespace Medidata.RWS.Core.Responses
         /// Create a new instance with an XML string.
         /// </summary>
         /// <param name="xmlString"></param>
-        public RWSXMLResponse(string xmlString)
+        protected RWSXMLResponse(string xmlString)
         {
             xmlString = string.IsNullOrEmpty(xmlString) ? string.Empty : xmlString;
             this.xmlString = xmlString;
@@ -57,7 +69,7 @@ namespace Medidata.RWS.Core.Responses
         /// <summary>
         /// Initializes a new instance of the <see cref="RWSXMLResponse"/> class.
         /// </summary>
-        public RWSXMLResponse()
+        protected RWSXMLResponse()
         {
 
         }
@@ -69,16 +81,7 @@ namespace Medidata.RWS.Core.Responses
         /// <returns></returns>
         public XmlElement ParseXMLString(string xmlString)
         {
-            xmlString = xmlString.Trim('\uFEFF', '\u200B');
-
-            if (string.IsNullOrEmpty(xmlString))
-            {
-                xmlString = new ODMBuilder().AsXMLString();
-            }
-
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xmlString);
-            return xmlDoc.DocumentElement;
+            return RWSHelpers.Xml.GetXmlElementFromString(xmlString);
         }
 
 

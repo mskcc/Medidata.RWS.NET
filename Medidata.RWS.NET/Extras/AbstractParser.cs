@@ -39,7 +39,7 @@ namespace Medidata.RWS.Extras
         {
             var odm = odmResponse as RWSResponse;
 
-            OdmXmlDoc = XDocument.Parse(odm != null ? odm.RawXMLString() : "");
+            OdmXmlDoc = odm != null ? odm.GetXDocument() : XDocument.Parse("");
         }
 
         /// <summary>
