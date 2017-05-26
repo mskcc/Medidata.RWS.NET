@@ -98,9 +98,11 @@ Note that this is provided as a convenience, and the default virtual directory w
 --------
 Timeouts
 --------
-TBA
+If supplied, the timeout of the request in milliseconds. If the request takes longer than the timeout value, an exception will be thrown.
 
--------
-Retries
--------
-TBA
+.. code-block:: c#
+
+	using Medidata.RWS.Core.Requests;
+
+	//Create a connection
+	var connection = new RwsConnection("innovate", "RAVE username", timeout: 1000)
