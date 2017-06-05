@@ -1,4 +1,4 @@
-============================================
+﻿============================================
 Core Resources
 ============================================
 
@@ -101,20 +101,159 @@ clinical data for your studies:
 -------------------
 StudyDatasetRequest
 -------------------
-Clinical data in ODM format for the given study / environment. 
+Clinical data in ODM format for the given study / environment. This data can be optionally filtered by a specific Form.
 
-TBA
+This is the equivalent of calling:
+``https://{subdomain}.mdsol.com/studies/{project}({environment})/datasets/{ regular|raw }?{options}``
+
+or, to filter the data by form:
+``https://{subdomain}.mdsol.com/studies/{project}({environment})/datasets/{ regular|raw }/{ formoid }?{options}``
+
+*Example:*
+
+.. code-block:: c#
+
+	using Medidata.RWS.Core.Requests.Implementations;
+
+	//Create a connection
+	var connection = new RwsConnection("innovate", "username", "password"); // authentication required
+
+	//Send the request / get a response
+	var response = connection.SendRequest(new StudyDatasetRequest("Mediflex", "Prod", dataset_type: "regular")) as RWSResponse;
+
+	//Write the XML response to the console (see XML below)
+	Console.Write(response.xmlString);
+
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <ODM FileType="Snapshot" FileOID="92747321-c8b3-4a07-a874-0ecb53153f20" CreationDateTime="2017-06-05T13:09:33.202-00:00" ODMVersion="1.3" xmlns:mdsol="http://www.mdsol.com/ns/odm/metadata" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.cdisc.org/ns/odm/v1.3">
+       <ClinicalData StudyOID="Mediflex(Prod)" MetaDataVersionOID="1">
+            <SubjectData SubjectKey="1">
+                <SiteRef LocationOID="1" />
+                <StudyEventData StudyEventOID="SCREENING" StudyEventRepeatKey="1">
+                    <FormData FormOID="CHEM" FormRepeatKey="1">
+                        <ItemGroupData ItemGroupOID="CHEM_LOG_LINE">
+                            <ItemData ItemOID="CHEM.DATECOLL" Value="2015-04-25T14:09:00" />
+                        </ItemGroupData>
+                    </FormData>
+                </StudyEventData>
+            </SubjectData>
+        </ClinicalData>
+        <ClinicalData StudyOID="Mediflex(Prod)" MetaDataVersionOID="1">
+            <SubjectData SubjectKey="2">
+                <SiteRef LocationOID="1" />
+                <StudyEventData StudyEventOID="SCREENING" StudyEventRepeatKey="1">
+                    <FormData FormOID="CHEM" FormRepeatKey="1">
+                        <ItemGroupData ItemGroupOID="CHEM_LOG_LINE">
+                            <ItemData ItemOID="CHEM.DATECOLL" Value="2015-04-13T16:34:00" />
+                        </ItemGroupData>
+                    </FormData>
+                </StudyEventData>
+            </SubjectData>
+        </ClinicalData>
+        <ClinicalData StudyOID="Mediflex(Prod)" MetaDataVersionOID="1">
+            <SubjectData SubjectKey="3">
+                <SiteRef LocationOID="1" />
+                <StudyEventData StudyEventOID="SCREENING" StudyEventRepeatKey="1">
+                    <FormData FormOID="CHEM" FormRepeatKey="1">
+                        <ItemGroupData ItemGroupOID="CHEM_LOG_LINE">
+                            <ItemData ItemOID="CHEM.DATECOLL" Value="2015-05-09T18:52:00" />
+                        </ItemGroupData>
+                    </FormData>
+                </StudyEventData>
+            </SubjectData>
+        </ClinicalData>
+        ...
+    </ODM>
+
 
 ---------------------
 SubjectDatasetRequest
 ---------------------
-Clinical data in ODM format for the given study / environment for a single subject.
+Clinical data in ODM format for the given study / environment for a single subject. Similar to ``StudyDatasetRequest``,
+this data can be optionally filtered by a specific Form.
 
-TBA
+This is the equivalent of calling:
+``https://{subdomain}.mdsol.com/studies/{project}({environment})/subjects/{ subjectkey }/datasets/{ regular|raw }?{options}``
+
+or, to filter the data by form:
+``https://{subdomain}.mdsol.com/studies/{project}({environment})/subjects/{ subjectkey }/datasets/{ regular|raw }/{ formoid }?{options}``
+
+
+.. code-block:: c#
+
+	using Medidata.RWS.Core.Requests.Implementations;
+
+	//Create a connection
+	var connection = new RwsConnection("innovate", "username", "password"); // authentication required
+
+	//Send the request / get a response
+	var response = connection.SendRequest(new SubjectDatasetRequest("Mediflex", "Prod", subject_key: "1", dataset_type: "regular")) as RWSResponse;
+
+	//Write the XML response to the console (see XML below)
+	Console.Write(response.xmlString);
+
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <ODM FileType="Snapshot" FileOID="9035596c-f090-4030-860a-0ed27a4e3d03" CreationDateTime="2017-06-05T13:28:39.325-00:00" ODMVersion="1.3" xmlns:mdsol="http://www.mdsol.com/ns/odm/metadata" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.cdisc.org/ns/odm/v1.3">
+    <ClinicalData StudyOID="Mediflex(Prod)" MetaDataVersionOID="1">
+        <SubjectData SubjectKey="1">
+            <SiteRef LocationOID="1" />
+            <StudyEventData StudyEventOID="SCREENING" StudyEventRepeatKey="1">
+                <FormData FormOID="CHEM" FormRepeatKey="1">
+                    <ItemGroupData ItemGroupOID="CHEM_LOG_LINE">
+                        <ItemData ItemOID="CHEM.DATECOLL" Value="2015-04-25T16:09:00" />
+                    </ItemGroupData>
+                </FormData>
+            </StudyEventData>
+        </SubjectData>
+    </ClinicalData>
+    <ClinicalData StudyOID="Mediflex(Prod)" MetaDataVersionOID="1">
+        <SubjectData SubjectKey="1">
+            <SiteRef LocationOID="1" />
+            <StudyEventData StudyEventOID="SCREENING" StudyEventRepeatKey="1">
+                <FormData FormOID="ABX" FormRepeatKey="1">
+                    <ItemGroupData ItemGroupOID="ABX_LOG_LINE">
+                        <ItemData ItemOID="ABX.ABXDATE" Value="2017-04-25" />
+                        <ItemData ItemOID="ABX.MODALITY" Value="2" />
+                    </ItemGroupData>
+                </FormData>
+            </StudyEventData>
+        </SubjectData>
+    </ClinicalData>
+    <ClinicalData StudyOID="Mediflex(Prod)" MetaDataVersionOID="1">
+        <SubjectData SubjectKey="1">
+            <SiteRef LocationOID="1" />
+            <StudyEventData StudyEventOID="SCREENING" StudyEventRepeatKey="1">
+                <FormData FormOID="BONEMARROW" FormRepeatKey="1">
+                    <ItemGroupData ItemGroupOID="BONEMARROW_LOG_LINE">
+                        <ItemData ItemOID="BONEMARROW.VISITDAT" Value="2015-04-24" />
+                        <ItemData ItemOID="BONEMARROW.CHEMSAMPLE" Value="1" />
+                        <ItemData ItemOID="BONEMARROW.BMPB_COLLECT" Value="1" />
+						...
+                    </ItemGroupData>
+                </FormData>
+            </StudyEventData>
+        </SubjectData>
+    </ClinicalData>
+	...
+    </ODM>
+
 
 ---------------------
 VersionDatasetRequest
 ---------------------
 Clinical data in ODM format for the given study / environment for a single RAVE study version for all subjects.
+Similar to ``StudyDatasetRequest``, this data can be optionally filtered by a specific Form.
 
-TBA
+This is the equivalent of calling:
+``https://{subdomain}.mdsol.com/studies/{project}({environment})/versions/{ version_id }/datasets/{ regular|raw }?{options}``
+
+or, to filter the data by form:
+``https://{subdomain}.mdsol.com/studies/{project}({environment})/versions/{ version_id }/datasets/{ regular|raw }/{ formoid }?{options}``
+
+*TBA*
