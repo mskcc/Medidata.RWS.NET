@@ -5,7 +5,7 @@ Using Builders
 When communicating with Medidata RAVE Web Services, your data payloads will take the form of ODM XML - or `Operational Data Model <http://www.cdisc.org/odm/>`_ XML documents.
 
 It's important to understand that RWS expects the XML data you send to conform to the ODM format - malformed or otherwise improperly formatted XML
-won't be processed. Since creating these data structures manually can be time consuming and tedious, Medidata.RWS.NET procides several "Builder" classes
+won't be processed. Since creating these data structures manually can be time consuming and tedious, Medidata.RWS.NET provides several "Builder" classes
 to help.
 
 Basic Example - Register a Subject
@@ -31,13 +31,13 @@ Using the above example, let's create a new ``ODMBuilder`` instance to register 
         cd.WithSubjectData("SUBJECT001", "SITE01", sd =>
             sd.WithTransactionType(TransactionType.Insert)));
 
-After instantiating the ``ODMBuilder`` class, you'll notice that you have access to chainable methods which allow you to construct the object appropriate
+After instantiating the ``ODMBuilder`` class, you'll notice that you have access to chain-able methods which allow you to construct the object appropriate
 for your use case. Since we are registering a subject, we supplied a Study OID (``Mediflex``), Subject Key (``SUBJECT001``), and Site (``SITE01``). 
 
 Each of the nested methods used (e.g. ``WithClinicalData``, ``WithSubjectData``, and ``WithTransactionType``) map to the specific XML node we want
 to construct. 
 
-To see the XML string representation of what we've got so far, you can use the ``AsXMLString()`` method, which will conver the ODM object 
+To see the XML string representation of what we've got so far, you can use the ``AsXMLString()`` method, which will convert the ODM object 
 you constructed into an XML string.
 
 For example:
