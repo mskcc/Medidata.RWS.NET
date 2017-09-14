@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="docs\basic_requests.rst" />
+    <None Include="docs\builders.rst" />
     <None Include="docs\core_resources.rst" />
     <None Include="docs\topics.rst" />
     <None Include="docs\getting_started.rst" />

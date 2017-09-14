@@ -18,6 +18,7 @@ Medidata.RWS.NET is a comprehensive, fluent .NET API library for `Medidata RAVE 
    topics
    basic_requests
    core_resources
+   builders
 
 
 Indices and tables
