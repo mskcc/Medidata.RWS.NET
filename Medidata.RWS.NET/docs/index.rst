@@ -11,7 +11,7 @@ Medidata.RWS.NET is a comprehensive, fluent .NET API library for `Medidata RAVE 
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    introduction
    getting_started
