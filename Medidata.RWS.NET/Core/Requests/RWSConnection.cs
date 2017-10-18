@@ -147,7 +147,7 @@ namespace Medidata.RWS.Core.Requests
                     }
 
                     dynamic _error;
-                    if (response.Headers.Any(x => x.ContentType.StartsWith("text/xml")))
+                    if (response.Headers.Any(x => x.Name.Equals("Content-Type") && x.Value.ToString().StartsWith("text/xml")))
                     {
                         if (response.Content.StartsWith("<Response"))
                         {
