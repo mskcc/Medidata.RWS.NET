@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Medidata.RWS.NET")]
-[assembly: AssemblyDescription("Provides classes that can be serialized to and deserialized from CDISC ODM (Operational Data Model) XML, and a fluent interface to Medidata RAVE Web Services.")]
+[assembly: AssemblyDescription("Medidata.RWS.NET is a comprehensive, fluent .NET API library for Medidata RAVE Web Services (RWS).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MSKCC")]
 [assembly: AssemblyProduct("Medidata.RWS.NET")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright ©  2017 Matthew Koch & Memorial Sloan Kettering Cancer Center")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.3.0")]
+[assembly: AssemblyVersion("1.0.4.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
