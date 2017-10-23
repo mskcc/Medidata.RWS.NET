@@ -96,7 +96,7 @@ namespace Medidata.RWS.Core.Responses
             string attributeValue)
         {
 
-            return XElement.Parse(RawXMLString())
+            return XElement.Parse(RWSHelpers.Xml.RemoveInvalidXmlChars(RawXMLString()))
                 .Descendants(XNamespace.Get(Constants.ODM_NS) + elementName)
                 .FirstOrDefault(el =>
                 {
@@ -118,7 +118,7 @@ namespace Medidata.RWS.Core.Responses
         public IEnumerable<XElement> GetAllElementsWithAttributeValue(string elementName, string attributeName,
             string attributeValue)
         {
-            return XElement.Parse(RawXMLString())
+            return XElement.Parse(RWSHelpers.Xml.RemoveInvalidXmlChars(RawXMLString()))
                 .Descendants(XNamespace.Get(Constants.ODM_NS) + elementName)
                 .Where(el =>
                 {
