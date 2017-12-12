@@ -41,6 +41,7 @@ namespace Medidata.RWS.Core.Requests
             this.domain = domain.ToLower().StartsWith("http") ? domain : string.Format("https://{0}.mdsol.com", domain);
             this.base_url = string.Format("{0}/{1}", this.domain, virtual_dir);
             this.request_time = TimeSpan.MinValue;
+            ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol|SecurityProtocolType.Tls12;
         }
 
 
