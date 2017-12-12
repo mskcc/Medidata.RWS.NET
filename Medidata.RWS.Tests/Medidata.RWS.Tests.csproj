@@ -96,6 +96,7 @@
     <Compile Include="Extras\AuditEvent\AuditEventParserTests.cs" />
     <Compile Include="Extras\AuditEvent\ODMAdapterTests.cs" />
     <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Integration\SecurityProtocolTest_MedidataRAVE_06JAN18.cs" />
     <Compile Include="ODMTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RWSHelpersTests.cs" />
