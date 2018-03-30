@@ -186,7 +186,7 @@ or, to filter the data by form:
 .. code-block:: c#
 
     using Medidata.RWS.Core.Requests
-	using Medidata.RWS.Core.Requests.Datasets;
+    using Medidata.RWS.Core.Requests.Datasets;
 
     //Create a connection
     var connection = new RwsConnection("innovate", "username", "password"); // authentication required
@@ -262,7 +262,7 @@ or, to filter the data by form:
 .. code-block:: c#
 
     using Medidata.RWS.Core.Requests
-	using Medidata.RWS.Core.Requests.Datasets;
+    using Medidata.RWS.Core.Requests.Datasets;
 
     //Create a connection
     var connection = new RwsConnection("innovate", "username", "password"); // authentication required
