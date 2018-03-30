@@ -1,12 +1,12 @@
-﻿In order for tests to run successfully, the Medidata.RWS assembly must not be installed in the GAC.
+﻿In order for tests to run successfully, the Medidata.RWS.NET assembly must not be installed in the GAC.
 
 To remove it from the GAC:
 
-gacutil /uf Medidata.RWS
+gacutil /uf Medidata.RWS.NET
 
 After test suite is run, it can be added back:
 
-gacutil /if Medidata.RWS.dll
+gacutil /if Medidata.RWS.NET.dll
 
 ## .env file
 Ensure you have a .env file in your test project root. 
