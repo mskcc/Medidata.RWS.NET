@@ -64,6 +64,7 @@
     <Compile Include="Core\Requests\CacheFlushRequest.cs" />
     <Compile Include="Core\Requests\Datasets\StudyDatasetRequest.cs" />
     <Compile Include="Core\Requests\Datasets\SubjectDatasetRequest.cs" />
+    <Compile Include="Core\Requests\Datasets\VersionDatasetRequest.cs" />
     <Compile Include="Core\Requests\Implementations\ClinicalStudiesRequest.cs" />
     <Compile Include="Core\Requests\Implementations\MetadataStudiesRequest.cs" />
     <Compile Include="Core\Requests\Implementations\PostDataRequest.cs" />

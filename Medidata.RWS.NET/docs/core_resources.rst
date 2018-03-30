@@ -113,7 +113,8 @@ or, to filter the data by form:
 
 .. code-block:: c#
 
-	using Medidata.RWS.Core.Requests.Implementations;
+	using Medidata.RWS.Core.Requests
+	using Medidata.RWS.Core.Requests.Datasets;
 
 	//Create a connection
 	var connection = new RwsConnection("innovate", "username", "password"); // authentication required
@@ -122,7 +123,7 @@ or, to filter the data by form:
 	var response = connection.SendRequest(new StudyDatasetRequest("Mediflex", "Prod", dataset_type: "regular")) as RWSResponse;
 
 	//Write the XML response to the console (see XML below)
-	Console.Write(response.xmlString);
+	Console.Write(response.RawXMLString());
 
 
 .. code-block:: xml
@@ -184,16 +185,17 @@ or, to filter the data by form:
 
 .. code-block:: c#
 
-	using Medidata.RWS.Core.Requests.Implementations;
+    using Medidata.RWS.Core.Requests
+    using Medidata.RWS.Core.Requests.Datasets;
 
-	//Create a connection
-	var connection = new RwsConnection("innovate", "username", "password"); // authentication required
+    //Create a connection
+    var connection = new RwsConnection("innovate", "username", "password"); // authentication required
 
-	//Send the request / get a response
-	var response = connection.SendRequest(new SubjectDatasetRequest("Mediflex", "Prod", subject_key: "1", dataset_type: "regular")) as RWSResponse;
+    //Send the request / get a response
+    var response = connection.SendRequest(new SubjectDatasetRequest("Mediflex", "Prod", subject_key: "1", dataset_type: "regular")) as RWSResponse;
 
-	//Write the XML response to the console (see XML below)
-	Console.Write(response.xmlString);
+    //Write the XML response to the console (see XML below)
+    Console.Write(response.RawXMLString());
 
 
 .. code-block:: xml
@@ -256,4 +258,62 @@ This is the equivalent of calling:
 or, to filter the data by form:
 ``https://{subdomain}.mdsol.com/studies/{project}({environment})/versions/{ version_id }/datasets/{ regular|raw }/{ formoid }?{options}``
 
-*TBA*
+
+.. code-block:: c#
+
+    using Medidata.RWS.Core.Requests
+    using Medidata.RWS.Core.Requests.Datasets;
+
+    //Create a connection
+    var connection = new RwsConnection("innovate", "username", "password"); // authentication required
+
+    //Send the request / get a response
+    var response = connection.SendRequest(new VersionDatasetRequest(project_name: "Mediflex", environment_name: "Dev", version_oid: "999")) as RWSResponse;
+
+    //Write the XML response to the console (see XML below)
+    Console.Write(response.RawXMLString());
+
+*Note the **MetaDataVersionOID** value in the XML response.*
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <ODM FileType="Snapshot" FileOID="9035596c-f090-4030-860a-0ed27a4e3d03" CreationDateTime="2017-06-05T13:28:39.325-00:00" ODMVersion="1.3" xmlns:mdsol="http://www.mdsol.com/ns/odm/metadata" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.cdisc.org/ns/odm/v1.3">
+    <ClinicalData StudyOID="Mediflex(Dev)" MetaDataVersionOID="999">
+        <SubjectData SubjectKey="1">
+            <SiteRef LocationOID="1" />
+            <StudyEventData StudyEventOID="SCREENING" StudyEventRepeatKey="1">
+                <FormData FormOID="CHEM" FormRepeatKey="1">
+                    <ItemGroupData ItemGroupOID="CHEM_LOG_LINE">
+                        <ItemData ItemOID="CHEM.DATECOLL" Value="2015-04-25T16:09:00" />
+                    </ItemGroupData>
+                </FormData>
+            </StudyEventData>
+        </SubjectData>
+    </ClinicalData>
+    <ClinicalData StudyOID="Mediflex(Dev)" MetaDataVersionOID="999">
+       <SubjectData SubjectKey="2">
+            <SiteRef LocationOID="1" />
+            <StudyEventData StudyEventOID="SCREENING" StudyEventRepeatKey="1">
+                <FormData FormOID="CHEM" FormRepeatKey="1">
+                    <ItemGroupData ItemGroupOID="CHEM_LOG_LINE">
+                        <ItemData ItemOID="CHEM.DATECOLL" Value="2016-04-25T16:09:00" />
+                    </ItemGroupData>
+                </FormData>
+            </StudyEventData>
+        </SubjectData>
+    </ClinicalData>
+    <ClinicalData StudyOID="Mediflex(Dev)" MetaDataVersionOID="999">
+        <SubjectData SubjectKey="3">
+            <SiteRef LocationOID="1" />
+            <StudyEventData StudyEventOID="SCREENING" StudyEventRepeatKey="1">
+                <FormData FormOID="CHEM" FormRepeatKey="1">
+                    <ItemGroupData ItemGroupOID="CHEM_LOG_LINE">
+                        <ItemData ItemOID="CHEM.DATECOLL" Value="2017-04-25T16:09:00" />
+                    </ItemGroupData>
+                </FormData>
+            </StudyEventData>
+        </SubjectData>
+    </ClinicalData>
+	...
+    </ODM>

@@ -73,6 +73,7 @@
     <Compile Include="Core\Requests\ClinicalStudiesRequestTests.cs" />
     <Compile Include="Core\Requests\CoreRequestsTests.cs" />
     <Compile Include="Core\Requests\Datasets\StudyDatasetRequestTests.cs" />
+    <Compile Include="Core\Requests\Datasets\VersionDatasetRequestTests.cs" />
     <Compile Include="Core\Requests\Datasets\SubjectDatasetRequestTests.cs" />
     <Compile Include="Core\Requests\MetadataStudiesRequestTests.cs" />
     <Compile Include="Core\Requests\ODM Adapter\AuditRecordsRequestTests.cs" />
@@ -102,9 +103,6 @@
     <Compile Include="RWSHelpersTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".env">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include=".env.example" />
     <None Include="packages.config" />
   </ItemGroup>
