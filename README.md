@@ -1,6 +1,8 @@
 ## Overview
 Medidata.RWS.NET is a comprehensive, fluent .NET API library for Medidata RAVE Web Services (RWS). It handles a large portion of the boilerplate C# code you'd normally have to write in order to communicate with RWS, allowing you to get up and running faster.
 
+***Looking for a .NET Core compatible version of this library? Check out [Medidata.RWS.NET.Standard](https://github.com/mskcc/Medidata.RWS.NET.Standard).***
+
 ## Documentation
 Documentation can be found at [http://medidatarwsnet.readthedocs.io/en/latest/](http://medidatarwsnet.readthedocs.io/en/latest/).
 
